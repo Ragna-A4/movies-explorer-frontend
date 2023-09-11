@@ -5,6 +5,7 @@ import "./App.css";
 import NotFound from "../NotFound/NotFound";
 import Header from "../Header/Header";
 import HeaderMain from "../Header/HeaderMain";
+import Footer from "../Footer/Footer";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Footer />
       </div>
     </div>
   );
