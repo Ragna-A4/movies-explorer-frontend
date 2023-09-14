@@ -20,24 +20,24 @@
 }
 
 .aboutProject__title-container {
-  width: 90%;
+  width: 89%;
+  max-height: 50px;
   border-bottom: 1px solid rgba(0, 0, 0, 1);
   display: flex;
   justify-content: flex-start;
-  padding: 0 0 23px 0;
   margin: 110px auto 0;
 }
 
 @media screen and (max-width: 1279px) {
   .aboutProject__title-container {
+    width: 87%;
     margin-top: 90px;
   }
 }
 
 @media screen and (max-width: 767px) {
   .aboutProject__title-container {
-    width: 93.7%;
-    padding-bottom: 28px;
+    width: 88.75%;
     margin-top: 70px;
   }
 }
@@ -45,18 +45,22 @@
 .aboutProject__title {
   line-height: 26.63px;
   font-size: 22px;
+  letter-spacing: -0.88px;
   font-weight: 400;
+  margin: auto 0 23px;
 }
 
 @media screen and (max-width: 767px) {
   .aboutProject__title {
-    line-height: 21.78px;
+    line-height: 22px;
     font-size: 18px;
+    letter-spacing: -0.72px;
+    margin-bottom: 28px;
   }
 }
 
 .aboutProject__description {
-  width: 90%;
+  width: 89%;
   display: flex;
   justify-content: flex-start;
   flex-direction: row;
@@ -66,21 +70,23 @@
 }
 @media screen and (max-width: 1279px) {
   .aboutProject__description {
+    width: 87%;
     gap: 30px;
   }
 }
 
 @media screen and (max-width: 767px) {
   .aboutProject__description {
-    width: 93.7%;
+    width: 88.75%;
     flex-direction: column;
-    margin-top: 60px;
-    gap: 56px;
+    margin-top: 61px;
+    gap: 57px;
   }
 }
 .aboutProject__block {
   display: flex;
   flex-direction: column;
+  width: 48.2%;
   gap: 26px;
   padding: 0;
   margin: 0;
@@ -88,12 +94,14 @@
 
 @media screen and (max-width: 1279px) {
   .aboutProject__block {
+    width: 47.75%;
     gap: 22px;
   }
 }
 
 @media screen and (max-width: 767px) {
   .aboutProject__block {
+    width: 100%;
     gap: 16px;
   }
 }
@@ -101,6 +109,7 @@
 .aboutProject__subtitle {
   line-height: 24.2px;
   font-size: 20px;
+  letter-spacing: -0.8px;
   font-weight: 400;
 }
 
@@ -108,6 +117,7 @@
   .aboutProject__subtitle {
     line-height: 21.78px;
     font-size: 18px;
+    letter-spacing: -0.72px;
   }
 }
 
@@ -133,7 +143,7 @@
 }
 
 .aboutProject__timeline-container {
-  width: 90%;
+  width: 89%;
   margin: 110px auto;
   padding: 0;
   display: grid;
@@ -143,6 +153,7 @@
 
 @media screen and (max-width: 1279px) {
   .aboutProject__timeline-container {
+    width: 87%;
     margin: 93px auto 90px;
     grid-template-columns: 1fr 3.7fr;
   }
@@ -150,6 +161,7 @@
 
 @media screen and (max-width: 767px) {
   .aboutProject__timeline-container {
+    width: 88.75%;
     margin: 60px auto 69px;
     grid-template-columns: 1fr 1.8fr;
     grid-template-rows: 35px 24px;

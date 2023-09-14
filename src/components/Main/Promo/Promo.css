@@ -5,24 +5,26 @@
   background-image: url(../../../images/logo_practicum.svg);
   background-repeat: no-repeat;
   background-size: 320px 320px;
-  background-position: center;
+  background-position: top 82px left 50%;
   max-height: 524px;
   margin: 0;
-  padding: 262px 0;
+  padding: 184px 0 224px;
 }
 
 @media screen and (max-width: 1279px) {
   .promo {
     max-height: 784px;
-    padding: 392px 0;
+    padding: 326px 0 342px;
+    background-position: top 224px left 50%;
   }
 }
 
 @media screen and (max-width: 767px) {
   .promo {
     max-height: 570px;
-    padding: 290px 0;
+    padding: 207px 0 246px;
     background-size: 248px 248px;
+    background-position: top 142px left 50%;
   }
 }
 
@@ -31,6 +33,7 @@
   max-height: 116px;
   line-height: 58px;
   font-size: 50px;
+  letter-spacing: -2px;
   font-weight: 400;
   margin: auto;
   text-align: center;
@@ -42,5 +45,6 @@
     max-height: 117px;
     line-height: 39px;
     font-size: 31px;
+    letter-spacing: -1.24px;
   }
 }

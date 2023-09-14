@@ -32,6 +32,7 @@
   font-size: 13px;
   line-height: 16px;
   font-weight: 500;
+  padding-top: 2px;
   cursor: pointer;
   opacity: 1;
   transition: opacity 0.2s linear;
@@ -44,6 +45,7 @@
 
 @media screen and (max-width: 767px) {
     .navTab__link {
+        padding-top: 0px;
         font-size: 11px;
     }
 }
