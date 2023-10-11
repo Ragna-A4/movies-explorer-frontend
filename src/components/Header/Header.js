@@ -9,23 +9,23 @@ function Header() {
     <header className="header">
       <img className="header__logo" alt="лого_бублик" src={logo} />
       <nav className="header__menu header__menu_type_authorized">
-        <a
+        <Link
+          to="movies"
           className="header__menu-item header__menu-item_type_authorized"
-          href="#"
         >
           Фильмы
-        </a>
-        <a
+        </Link>
+        <Link
+          to=""
           className="header__menu-item header__menu-item_type_authorized"
-          href="#"
         >
           Сохранённые фильмы
-        </a>
+        </Link>
       </nav>
       <div className="header__auth-container">
-        <a className="header__auth-text" href="#">
+        <Link to="" className="header__auth-text">
           Аккаунт
-        </a>
+        </Link>
         <button className="header__menu-icon" type="button"></button>
       </div>
     </header>
