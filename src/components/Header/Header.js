@@ -1,18 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import "./Header.css";
-import logo from "../../images/logo_bagel.svg";
 
 function Header() {
+  let { pathName } = useLocation;
   return (
     <header className="header">
-      <Link to="/">
-        <img className="header__logo" alt="лого_бублик" src={logo} />
-      </Link>
+      <Link to="/" className="header__logo" />
       <nav className="header__menu header__menu_type_authorized">
         <Link
-          to="movies"
+          to={`${
+            pathName === "/movies" ? "" : "/movies"
+          }`}
           className="header__menu-item header__menu-item_type_authorized"
         >
           Фильмы

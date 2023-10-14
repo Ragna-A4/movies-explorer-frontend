@@ -16,6 +16,8 @@
   margin: 18px auto 18px 70px;
   object-fit: cover;
   justify-self: flex-start;
+  background-image: url("../../images/logo_bagel.svg");
+  object-fit: cover;
   cursor: pointer;
   opacity: 1;
   transition: opacity 0.2s linear;
@@ -142,13 +144,12 @@
   border: none;
   padding: 15px 15px;
   margin-left: 13px;
-  background-color: #fff;
+  background-color: transparent;
   background-image: url("../../images/icon_auth_black.svg");
   object-fit: cover;
 }
 
 .header__menu-icon_color_pink {
-  background-color: #f3c1f8;
   background-image: url("../../images/icon_auth_pink.svg");
 }
 

@@ -21,7 +21,7 @@
 
 .searchbar__container {
   width: 100%;
-  margin: 70px 0 69px 0;
+  margin: 70px 0 67px 0;
   border-radius: 9px;
   border: 1px solid rgba(253, 253, 253, 1);
   box-shadow: 0px 3px 14px 0px rgba(0, 0, 0, 0.08);
@@ -33,7 +33,7 @@
 
 @media screen and (max-width: 1279px) {
   .searchbar__container {
-    margin: 80px 0 109px 0;
+    margin: 80px 0 107px 0;
   }
 }
 
@@ -68,8 +68,15 @@
   text-align: left;
 }
 
+@media screen and (max-width: 1279px) {
+  .searchbar__input {
+    min-width: 300px;
+  }
+}
+
 @media screen and (max-width: 767px) {
   .searchbar__input {
+    min-width: 150px;
     margin-left: 19px;
     font-size: 14px;
   }
@@ -87,7 +94,16 @@
   font-size: 11px;
   line-height: 18px;
   text-align: center;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.2s linear;
 }
+
+.searchbar__button:hover {
+  opacity: 0.7;
+  transition: opacity 0.2s linear;
+}
+
 
 .searchbar__slidebar {
   margin: 16px 0;
@@ -98,6 +114,7 @@
 
 @media screen and (max-width: 767px) {
   .searchbar__slidebar {
+    max-height: 20px;
     margin: 44px auto;
     border: none;
   }
@@ -129,6 +146,14 @@
   border: none;
   width: 36px;
   height: 20px;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.2s linear;
+}
+
+.searchbar__slidebar-icon:hover {
+  opacity: 0.7;
+  transition: opacity 0.2s linear;
 }
 
 .searchbar__slidebar-icon_switched_on {
@@ -141,6 +166,18 @@
   background-size: cover;
 }
 
+@media screen and (max-width: 1279px) {
+  .searchbar__slidebar-icon {
+    margin: 25px 15px 26px 19px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .searchbar__slidebar-icon {
+    margin-left: 0;
+  }
+}
+
 .searchbar__slidebar-text {
   margin: 27px 30px 27px 0;
   padding: 0;
@@ -151,8 +188,15 @@
   text-align: center;
 }
 
+@media screen and (max-width: 1279px) {
+  .searchbar__slidebar-text {
+    margin-right: 20px;
+  }
+}
+
 @media screen and (max-width: 767px) {
   .searchbar__slidebar-text {
     font-size: 11px;
+    margin-right: auto;
   }
 }
