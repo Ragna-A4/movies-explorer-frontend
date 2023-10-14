@@ -4,7 +4,11 @@ import "./MoviesCard.css";
 
 function MoviesCard({ image, name, duration, owner }) {
   const isOwn = owner === "me";
-  const cardButtonClassName = `moviescard__button ${isOwn ?  "moviescard__button_type_downloaded" : "moviescard__button_type_tosave"}`;
+  const cardButtonClassName = `moviescard__button ${
+    isOwn
+      ? "moviescard__button_type_downloaded"
+      : "moviescard__button_type_tosave"
+  }`;
 
   return (
     <div className="moviescard">

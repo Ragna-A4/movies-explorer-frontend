@@ -11,15 +11,13 @@ function Header() {
       <Link to="/" className="header__logo" />
       <nav className="header__menu header__menu_type_authorized">
         <Link
-          to={`${
-            pathName === "/movies" ? "" : "/movies"
-          }`}
+          to={`${pathName === "/movies" ? "" : "/movies"}`}
           className="header__menu-item header__menu-item_type_authorized"
         >
           Фильмы
         </Link>
         <Link
-          to=""
+          to={`${pathName === "/saved-movies" ? "" : "/saved-movies"}`}
           className="header__menu-item header__menu-item_type_authorized"
         >
           Сохранённые фильмы

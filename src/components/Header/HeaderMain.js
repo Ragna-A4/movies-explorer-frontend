@@ -16,7 +16,7 @@ function Header() {
           Фильмы
         </Link>
         <Link
-          to=""
+          to="saved-movies"
           className="header__menu-item header__menu-item_type_authorized"
         >
           Сохранённые фильмы
