@@ -7,7 +7,9 @@ import logo from "../../images/logo_bagel.svg";
 function Header() {
   return (
     <header className="header">
-      <img className="header__logo" alt="лого_бублик" src={logo} />
+      <Link to="/">
+        <img className="header__logo" alt="лого_бублик" src={logo} />
+      </Link>
       <nav className="header__menu header__menu_type_authorized">
         <Link
           to="movies"
