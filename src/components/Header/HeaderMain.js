@@ -23,7 +23,7 @@ function Header() {
         </Link>
       </nav>
       <div className="header__auth-container">
-        <Link to="" className="header__auth-text">
+        <Link to="profile" className="header__auth-text">
           Аккаунт
         </Link>
         <button

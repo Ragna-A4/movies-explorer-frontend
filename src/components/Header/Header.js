@@ -24,7 +24,10 @@ function Header() {
         </Link>
       </nav>
       <div className="header__auth-container">
-        <Link to="" className="header__auth-text">
+        <Link
+          to={`${pathName === "/profile" ? "" : "/profile"}`}
+          className="header__auth-text"
+        >
           Аккаунт
         </Link>
         <button className="header__menu-icon" type="button"></button>
