@@ -8,29 +8,17 @@ function Header() {
   return (
     <header className="header header_color_pink">
       <img className="header__logo" alt="лого_бублик" src={logo} />
-      <nav className="header__menu header__menu_type_authorized">
+      <nav className="header__menu">
         <Link
-          to="movies"
-          className="header__menu-item header__menu-item_type_authorized"
+          to="signup"
+          className="header__menu-item"
         >
-          Фильмы
-        </Link>
-        <Link
-          to="saved-movies"
-          className="header__menu-item header__menu-item_type_authorized"
-        >
-          Сохранённые фильмы
+          Регистрация
         </Link>
       </nav>
-      <div className="header__auth-container">
-        <Link to="profile" className="header__auth-text">
-          Аккаунт
-        </Link>
-        <button
-          className="header__menu-icon header__menu-icon_color_pink"
-          type="button"
-        ></button>
-      </div>
+      <Link to="signin" className="header__button-auth">
+        Войти
+      </Link>
     </header>
   );
 }
