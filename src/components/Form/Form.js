@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import "./Form.css";
 
 function Form(props) {
-  let { pathName } = useLocation();
+  let location = useLocation();
   return (
     <main className="form">
       <Link to="/" className="form__logo" />
@@ -13,7 +13,7 @@ function Form(props) {
       <form className="form__container">
         <div
           className={`${
-            pathName === "/signin"
+            location.pathname === "/signin"
               ? "form__input-container form__input-container_status_inactive"
               : "form__input-container"
           }`}

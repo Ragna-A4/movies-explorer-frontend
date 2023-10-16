@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import "./Navigation.css";
 
 function Navigation({ isOpen, onClose }) {
-  let { pathName } = useLocation;
+  let location = useLocation;
   return (
     <div className={`navigation ${isOpen ? "navigation_opened" : ""}`}>
       <button
@@ -15,26 +15,26 @@ function Navigation({ isOpen, onClose }) {
       />
       <nav className="navigation__container">
         <Link
-          to={`${pathName === "/" ? "" : "/"}`}
+          to={`${location.pathName === "/" ? "" : "/"}`}
           className="navigation__menu-item"
         >
           Главная
         </Link>
         <Link
-          to={`${pathName === "/movies" ? "" : "/movies"}`}
+          to={`${location.pathName === "/movies" ? "" : "/movies"}`}
           className="navigation__menu-item navigation__menu-item_isactive"
         >
           Фильмы
         </Link>
         <Link
-          to={`${pathName === "/saved-movies" ? "" : "/saved-movies"}`}
+          to={`${location.pathName === "/saved-movies" ? "" : "/saved-movies"}`}
           className="navigation__menu-item"
         >
           Сохранённые фильмы
         </Link>
       </nav>
       <Link
-        to={`${pathName === "/profile" ? "" : "/profile"}`}
+        to={`${location.pathName === "/profile" ? "" : "/profile"}`}
         className="navigation__auth-container"
       >
         <p className="navigation__auth-text">Аккаунт</p>
