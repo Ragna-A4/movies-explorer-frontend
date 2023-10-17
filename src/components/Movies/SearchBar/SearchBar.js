@@ -6,7 +6,7 @@ import searchicon from "../../../images/icon_search.svg";
 function SearchBar() {
   return (
     <section className="searchbar">
-      <div className="searchbar__container">
+      <form className="searchbar__container">
         <img className="searchbar__icon" alt="лупа" src={searchicon} />
         <input
           className="searchbar__input"
@@ -21,7 +21,7 @@ function SearchBar() {
           <button className="searchbar__slidebar-icon searchbar__slidebar-icon_switched_on" type="button" />
           <span className="searchbar__slidebar-text">Короткометражки</span>
         </div>
-      </div>
+      </form>
       <div className="searchbar__slidebar searchbar__slidebar_location_outside">
           <button className="searchbar__slidebar-icon searchbar__slidebar-icon_switched_on" type="button" />
           <span className="searchbar__slidebar-text">Короткометражки</span>
