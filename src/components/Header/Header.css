@@ -58,7 +58,7 @@
   gap: 20px;
 }
 
-@media screen and (max-width: 1279px) {
+@media screen and (max-width: 768px) {
   .header__menu_type_authorized {
     display: none;
   }
@@ -138,7 +138,7 @@
   visibility: hidden;
 }
 
-@media screen and (max-width: 1279px) {
+@media screen and (max-width: 768px) {
   .header__button-burger {
     visibility: visible;
     border: none;
@@ -150,7 +150,7 @@
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 320px) {
   .header__button-burger {
     border: none;
     background-color: transparent;
@@ -175,7 +175,7 @@
   transition: opacity 0.2s linear;
 }
 
-@media screen and (max-width: 1279px) {
+@media screen and (max-width: 768.5px) {
   .header__auth-container {
     display: none;
   }
