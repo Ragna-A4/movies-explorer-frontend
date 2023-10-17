@@ -9,7 +9,7 @@ function Profile() {
   return (
     <>
       <Header />
-      <section className="profile">
+      <main className="profile">
         <h1 className="profile__title">Привет, Саша!</h1>
         <form className="profile__form">
           <div className="profile__input-container">
@@ -23,7 +23,7 @@ function Profile() {
           <button className="profile__button profile__button_type_save" type="submit">Редактировать</button>
         </form>
         <Link to="/signin" className="profile__button profile__button_type_logout">Выйти из аккаунта</Link>
-      </section>
+      </main>
     </>
   );
 }

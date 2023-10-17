@@ -9,12 +9,12 @@ import Footer from "../Footer/Footer";
 
 function Movies() {
   return (
-    <div className="movies">
+    <main className="movies">
       <Header />
       <SearchBar />
       <MoviesCardList />
       <Footer />
-    </div>
+    </main>
   );
 }
 

@@ -1,9 +1,11 @@
 import React from "react";
 import Form from "../Form/Form";
 
+import "./Login.css";
+
 function Login() {
   return (
-    <>
+    <main className="login">
       <Form
         title="Рады видеть!"
         buttonName="Войти"
@@ -11,7 +13,7 @@ function Login() {
         path="/signup"
         linkText="Регистрация"
       />
-    </>
+    </main>
   );
 }
 
