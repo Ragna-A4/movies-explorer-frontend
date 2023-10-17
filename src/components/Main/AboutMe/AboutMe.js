@@ -39,53 +39,47 @@ function AboutMe() {
       </div>
       <div className="aboutMe__portfolio">
         <h2 className="aboutMe__portfolio-title">Портфолио</h2>
-        <ul className="aboutMe__projects">
-          <li className="aboutMe__project">
-            <a
-              className="aboutMe__project-name"
-              target="_blank"
-              rel="noreferrer"
-              href="https://ragna-a4.github.io/how-to-learn/"
-            >
-              Статичный сайт
-            </a>
+        <div className="aboutMe__projects">
+          <a
+            className="aboutMe__project"
+            target="_blank"
+            rel="noreferrer"
+            href="https://ragna-a4.github.io/how-to-learn/"
+          >
+            <h3 className="aboutMe__project-name">Статичный сайт</h3>
             <img
               className="aboutMe__project-icon"
               alt="стрелка_статичный_сайт"
               src={arrow}
             />
-          </li>
-          <li className="aboutMe__project">
-            <a
-              className="aboutMe__project-name"
-              target="_blank"
-              rel="noreferrer"
-              href="https://ragna-a4.github.io/russian-travel/"
-            >
-              Адаптивный сайт
-            </a>
+          </a>
+          <a
+            className="aboutMe__project"
+            target="_blank"
+            rel="noreferrer"
+            href="https://ragna-a4.github.io/russian-travel/"
+          >
+            <h3 className="aboutMe__project-name">Адаптивный сайт</h3>
             <img
               className="aboutMe__project-icon"
               alt="стрелка_адаптивный_сайт"
               src={arrow}
             />
-          </li>
-          <li className="aboutMe__project">
-            <a
-              className="aboutMe__project-name"
-              target="_blank"
-              rel="noreferrer"
-              href="https://ragna-a4.github.io/mesto/"
-            >
-              Одностраничное приложение
-            </a>
+          </a>
+          <a
+            className="aboutMe__project"
+            target="_blank"
+            rel="noreferrer"
+            href="https://ragna-a4.github.io/mesto/"
+          >
+            <h3 className="aboutMe__project-name">Одностраничное приложение</h3>
             <img
               className="aboutMe__project-icon"
               alt="стрелка_одностраничное_приложение"
               src={arrow}
             />
-          </li>
-        </ul>
+          </a>
+        </div>
       </div>
     </section>
   );

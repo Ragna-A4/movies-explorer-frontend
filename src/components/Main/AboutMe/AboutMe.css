@@ -252,10 +252,19 @@
   justify-content: space-between;
   border-bottom: 1px solid rgba(232, 232, 232, 1);
   max-height: 70px;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.2s linear;
 }
 
 .aboutMe__project:last-of-type {
   border-bottom: none;
+}
+
+.aboutMe__project:hover {
+  opacity: 0.7;
+  transition: opacity 0.2s linear;
 }
 
 @media screen and (max-width: 767px) {
@@ -273,15 +282,6 @@
   list-style: none;
   margin: 0 0 19px;
   align-self: center;
-  text-decoration: none;
-  cursor: pointer;
-  opacity: 1;
-  transition: opacity 0.2s linear;
-}
-
-.aboutMe__project-name:hover {
-  opacity: 0.7;
-  transition: opacity 0.2s linear;
 }
 
 @media screen and (max-width: 1279px) {
@@ -307,16 +307,16 @@
 }
 
 @media screen and (max-width: 1279px) {
-    .aboutMe__project-icon {
-      width: 27px;
-    }
+  .aboutMe__project-icon {
+    width: 27px;
   }
-  
-  @media screen and (max-width: 767px) {
-    .aboutMe__project-icon {
-      width: 11px;
-      height: 20px;
-      margin: 3px 3px auto auto;
-      object-fit: contain;
-    }
-  } 
+}
+
+@media screen and (max-width: 767px) {
+  .aboutMe__project-icon {
+    width: 11px;
+    height: 20px;
+    margin: 3px 3px auto auto;
+    object-fit: contain;
+  }
+}
