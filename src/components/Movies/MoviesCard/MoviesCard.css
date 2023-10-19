@@ -1,0 +1,115 @@
+.moviescard {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.moviescard__image {
+  margin: 0 auto 14px;
+  z-index: 1;
+  width: 100%;
+  object-fit: cover;
+}
+
+.moviescard__image:hover {
+  z-index: 0;
+}
+
+@media screen and (max-width: 1279px) {
+  .moviescard__image {
+    margin-bottom: 25px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .moviescard__image {
+    margin-bottom: 16px;
+    z-index: 0;
+    max-height: 168px;
+  }
+}
+
+.moviescard__button {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: none;
+  background-color: transparent;
+  width: 21px;
+  height: 21px;
+}
+
+.moviescard__button_type_tosave {
+  width: 72px;
+  background-image: url("../../../images/button_save.svg");
+}
+
+.moviescard__button_type_downloaded {
+  background-image: url("../../../images/icon_added.svg");
+  z-index: 1;
+}
+
+.moviescard__button_type_todelete {
+  background-image: url("../../../images/button_delete.svg");
+}
+
+@media screen and (max-width: 767px) {
+  .moviescard__button {
+    top: 10px;
+    right: 10px;
+  }
+}
+
+.moviescard__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 18px;
+  margin: 0;
+}
+
+.moviescard__title {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16.94px;
+  color: #000;
+  margin: 0 auto 0 14px;
+}
+
+@media screen and (max-width: 1279px) {
+  .moviescard__title {
+    margin-left: 0;
+    font-size: 13px;
+    line-height: 15.73px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .moviescard__title {
+    font-size: 12px;
+    line-height: 14.52px;
+  }
+}
+
+.moviescard__duration {
+  background-color: #f9f9f9;
+  display: flex;
+  width: 52px;
+  height: 18px;
+  border-radius: 3px;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 10px;
+  color: #a0a0a0;
+  margin: 0 14px 0 auto;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 1279px) {
+  .moviescard__duration {
+    margin-right: 0;
+  }
+}
