@@ -1,6 +1,6 @@
 class MoviesApi {
   constructor(config) {
-    this.baseUrl = config.url;
+    this.baseUrl = config.baseUrl;
     this._headers = config.headers;
   }
 
@@ -10,9 +10,8 @@ class MoviesApi {
   }
 
   getMovies() {
-    return fetch(this.baseUrl + "/beatfilm-movies", {
+    return fetch(`${this.baseUrl}/beatfilm-movies`, {
       method: "GET",
-      credentials: 'include',
       headers: this._headers,
     }).then((res) => this._checkResult(res));
   }

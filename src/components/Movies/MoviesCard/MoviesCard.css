@@ -8,6 +8,7 @@
   margin: 0 auto 14px;
   z-index: 1;
   width: 100%;
+  height: 200px;
   object-fit: cover;
 }
 
@@ -18,6 +19,7 @@
 @media screen and (max-width: 1279px) {
   .moviescard__image {
     margin-bottom: 25px;
+    height: 188px;
   }
 }
 
@@ -25,7 +27,7 @@
   .moviescard__image {
     margin-bottom: 16px;
     z-index: 0;
-    max-height: 168px;
+    height: 168px;
   }
 }
 
