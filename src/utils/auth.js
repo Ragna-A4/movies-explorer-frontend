@@ -1,4 +1,5 @@
-export const baseUrl = "https://api.movies.av4.nomoredomainsicu.ru"
+export const baseUrl = "http://localhost:3000"
+// export const baseUrl = "https://api.movies.av4.nomoredomainsicu.ru"
 
 function checkResult(res) {
   if (res.ok) return res.json();
@@ -30,16 +31,6 @@ export const authorize = (email, password) => {
 export const signout = () => {
   return fetch(`${baseUrl}/signout`, {
     method: "POST",
-    credentials: 'include',
-  }).then((res) => checkResult(res));
-};
-
-export const getContent = () => {
-  return fetch(`${baseUrl}/users/me`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
     credentials: 'include',
   }).then((res) => checkResult(res));
 };
