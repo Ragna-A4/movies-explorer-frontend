@@ -24,7 +24,8 @@ function App() {
   function handleLogin(email, password) {
     auth
       .authorize(email, password)
-      .then(() => {
+      .then((data) => {
+        setCurrentUser(data);
         setLoggedIn(true);
         navigate("/movies");
       })
@@ -63,10 +64,23 @@ function App() {
       .getProfile()
       .then((data) => {
         setCurrentUser(data);
-        console.log(currentUser);
       })
       .catch((err) => console.log(`Err: ${err}`));
   }, [isLoggedIn]);
+
+  function signout() {
+    auth
+    .signout()
+    .then(res => {
+      if(res) {
+        setLoggedIn(false);
+        setCurrentUser({});
+        navigate("/signin", {replace: true});
+      }
+    })
+    .catch((err) => console.log(`Err: ${err}`));
+  }
+
 
   return (
     <currentUserContext.Provider value={currentUser}>
@@ -93,6 +107,7 @@ function App() {
                   element={Profile}
                   isLoggedIn={isLoggedIn}
                   userData={currentUser}
+                  signOut={signout}
                 />
               }
             />
