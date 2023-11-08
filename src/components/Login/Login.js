@@ -1,26 +1,27 @@
 import React from "react";
+
 import Form from "../Form/Form";
 
 import "./Login.css";
 
 function Login({onLogin}) {
 
-  const [formValue, setFormValue] = React.useState({
-    email: "",
-    password: "",
-  });
+  const [values, setValues] = React.useState({});
+  const [errors, setErrors] = React.useState({});
+  const [isValid, setIsValid] = React.useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const target = e.target;
+    const name = target.name;
+    const value = target.value;
 
-    setFormValue({
-      ...formValue,
-      [name]: value,
-    });
+    setValues({ ...values, [name]: value });
+    setErrors({ ...errors, [name]: target.validationMessage });
+    setIsValid(target.closest("form").checkValidity());
   };
 
   function handleSubmit(e) {
-    const { email, password } = formValue;
+    const { email, password } = values;
     e.preventDefault();
     onLogin(email, password);
   }
@@ -30,6 +31,7 @@ function Login({onLogin}) {
       <Form
         title="Рады видеть!"
         name="login"
+        validityStatus={isValid}
         buttonName="Войти"
         onSubmit={handleSubmit}
         span="Ещё не зарегистрированы?"
@@ -49,10 +51,10 @@ function Login({onLogin}) {
             required
             minLength="2"
             maxLength="30"
-            value={formValue.email}
+            value={values.email}
             onChange={handleChange}
           ></input>
-          <span className="form__input-description form__input-description_type_error"></span>
+          <span className="form__input-description form__input-description_type_error">{errors.email}</span>
         </div>
         <div className="form__input-container">
           <label className="form__input-description form__input-description_type_label">
@@ -67,10 +69,10 @@ function Login({onLogin}) {
             required
             minLength="8"
             maxLength="20"
-            value={formValue.password}
+            value={values.password}
             onChange={handleChange}
           ></input>
-          <span className="form__input-description form__input-description_type_error"></span>
+          <span className="form__input-description form__input-description_type_error">{errors.password}</span>
         </div>
       </Form>
     </main>
