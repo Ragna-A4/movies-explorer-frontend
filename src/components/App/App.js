@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
-import { currentUserContext } from "../../contexts/CurrenUserContext";
+import { currentUserContext } from "../../contexts/CurrentUserContext";
 
 import "./App.css";
 import NotFound from "../NotFound/NotFound";
@@ -10,7 +10,7 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
-import * as auth from "../../utils/auth";
+import * as auth from "../../utils/Auth";
 import { mainApi } from "../../utils/MainApi";
 import { ProtectedRoute } from "../ProtectedRoute";
 

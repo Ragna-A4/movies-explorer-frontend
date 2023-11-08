@@ -7,6 +7,7 @@ function Form({
   title,
   name,
   children,
+  validityStatus,
   buttonName,
   onSubmit,
   span,
@@ -19,7 +20,7 @@ function Form({
       <h1 className="form__title">{title}</h1>
       <form className="form__container" name={name} onSubmit={onSubmit}>
         {children}
-        <button className="form__button" type="submit">
+        <button className={`form__button ${validityStatus !== true ? "form__button_type_disabled" : ""}`} type="submit" disabled={!validityStatus}>
           {buttonName}
         </button>
       </form>

@@ -1,30 +1,46 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { currentUserContext } from "../../contexts/CurrentUserContext";
 import Form from "../Form/Form";
-import * as auth from "../../utils/auth";
+import * as auth from "../../utils/Auth";
 
 import "./Register.css";
 
 function Register() {
   const navigate = useNavigate();
+  const currentUser = React.useContext(currentUserContext);
 
-  const [formValue, setFormValue] = React.useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const [values, setValues] = React.useState({});
+  const [errors, setErrors] = React.useState({});
+  const [isValid, setIsValid] = React.useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const target = e.target;
+    const name = target.name;
+    const value = target.value;
 
-    setFormValue({
-      ...formValue,
-      [name]: value,
-    });
+    setValues({ ...values, [name]: value });
+    setErrors({ ...errors, [name]: target.validationMessage });
+    setIsValid(target.closest("form").checkValidity());
   };
 
+  const resetForm = React.useCallback(
+    (newValues = {}, newErrors = {}, newIsValid = false) => {
+      setValues(newValues);
+      setErrors(newErrors);
+      setIsValid(newIsValid);
+    },
+    [setValues, setErrors, setIsValid]
+  );
+
+  React.useEffect(() => {
+    if (currentUser) {
+      resetForm(currentUser, {}, true);
+    }
+  }, [currentUser, resetForm]);
+
   function handleSubmit(e) {
-    const { name, email, password } = formValue;
+    const { name, email, password } = values;
     e.preventDefault();
     auth
       .register(name, email, password)
@@ -41,6 +57,7 @@ function Register() {
       <Form
         title="Добро пожаловать!"
         name="register"
+        validityStatus={isValid}
         buttonName="Зарегистрироваться"
         onSubmit={handleSubmit}
         span="Уже зарегистрированы?"
@@ -60,10 +77,12 @@ function Register() {
             required
             minLength="2"
             maxLength="30"
-            value={formValue.name}
+            value={values.name}
             onChange={handleChange}
           ></input>
-          <span className="form__input-description form__input-description_type_error"></span>
+          <span className="form__input-description form__input-description_type_error">
+            {errors.name}
+          </span>
         </div>
         <div className="form__input-container">
           <label className="form__input-description form__input-description_type_label">
@@ -78,10 +97,12 @@ function Register() {
             required
             minLength="2"
             maxLength="30"
-            value={formValue.email}
+            value={values.email}
             onChange={handleChange}
           ></input>
-          <span className="form__input-description form__input-description_type_error"></span>
+          <span className="form__input-description form__input-description_type_error">
+            {errors.email}
+          </span>
         </div>
         <div className="form__input-container">
           <label className="form__input-description form__input-description_type_label">
@@ -96,10 +117,12 @@ function Register() {
             required
             minLength="8"
             maxLength="20"
-            value={formValue.password}
+            value={values.password}
             onChange={handleChange}
           ></input>
-          <span className="form__input-description form__input-description_type_error"></span>
+          <span className="form__input-description form__input-description_type_error">
+            {errors.password}
+          </span>
         </div>
       </Form>
     </main>

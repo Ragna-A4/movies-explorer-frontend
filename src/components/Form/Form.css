@@ -136,6 +136,12 @@
   }
 }
 
+.form__button_type_disabled {
+  cursor: auto;
+  background-color: #a0a0a0;
+  opacity: 0.6;
+}
+
 .form__span {
   text-align: center;
   font-size: 14px;
