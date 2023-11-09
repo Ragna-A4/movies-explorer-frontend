@@ -1,43 +1,28 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { currentUserContext } from "../../contexts/CurrentUserContext";
+import { useFormWithValidation } from "../../utils/UseFormWithValidation";
 import Form from "../Form/Form";
 import * as auth from "../../utils/Auth";
 
 import "./Register.css";
 
-function Register() {
+function Register({ isLoggedIn }) {
   const navigate = useNavigate();
-  const currentUser = React.useContext(currentUserContext);
 
-  const [values, setValues] = React.useState({});
-  const [errors, setErrors] = React.useState({});
-  const [isValid, setIsValid] = React.useState(false);
-
-  const handleChange = (e) => {
-    const target = e.target;
-    const name = target.name;
-    const value = target.value;
-
-    setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: target.validationMessage });
-    setIsValid(target.closest("form").checkValidity());
-  };
-
-  const resetForm = React.useCallback(
-    (newValues = {}, newErrors = {}, newIsValid = false) => {
-      setValues(newValues);
-      setErrors(newErrors);
-      setIsValid(newIsValid);
-    },
-    [setValues, setErrors, setIsValid]
-  );
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormWithValidation();
 
   React.useEffect(() => {
-    if (currentUser) {
-      resetForm(currentUser, {}, true);
+    if (isLoggedIn) {
+      navigate("/profile");
     }
-  }, [currentUser, resetForm]);
+    // eslint-disable-next-line
+  }, [isLoggedIn]);
+
+  React.useEffect(() => {
+    resetForm();
+    // eslint-disable-next-line
+  }, []);
 
   function handleSubmit(e) {
     const { name, email, password } = values;

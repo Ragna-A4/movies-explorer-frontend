@@ -70,17 +70,25 @@ function App() {
 
   function signout() {
     auth
-    .signout()
-    .then(res => {
-      if(res) {
-        setLoggedIn(false);
-        setCurrentUser({});
-        navigate("/signin", {replace: true});
-      }
-    })
-    .catch((err) => console.log(`Err: ${err}`));
+      .signout()
+      .then((res) => {
+        if (res) {
+          setLoggedIn(false);
+          setCurrentUser({});
+          navigate("/signin", { replace: true });
+        }
+      })
+      .catch((err) => console.log(`Err: ${err}`));
   }
 
+  function handleUpdateUser(name, email) {
+    mainApi
+      .patchProfile(name, email)
+      .then((data) => {
+        setCurrentUser(data);
+      })
+      .catch((err) => console.log(`Err: ${err}`));
+  }
 
   return (
     <currentUserContext.Provider value={currentUser}>
@@ -106,13 +114,19 @@ function App() {
                 <ProtectedRoute
                   element={Profile}
                   isLoggedIn={isLoggedIn}
-                  userData={currentUser}
+                  onUpdate={handleUpdateUser}
                   signOut={signout}
                 />
               }
             />
-            <Route path="/signin" element={<Login onLogin={handleLogin} />} />
-            <Route path="/signup" element={<Register />} />
+            <Route
+              path="/signin"
+              element={<Login onLogin={handleLogin} isLoggedIn={isLoggedIn} />}
+            />
+            <Route
+              path="/signup"
+              element={<Register isLoggedIn={isLoggedIn} />}
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

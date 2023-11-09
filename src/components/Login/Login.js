@@ -1,24 +1,26 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
+import { useFormWithValidation } from "../../utils/UseFormWithValidation";
 import Form from "../Form/Form";
 
 import "./Login.css";
 
-function Login({onLogin}) {
+function Login({ isLoggedIn, onLogin }) {
+  const navigate = useNavigate();
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormWithValidation();
 
-  const [values, setValues] = React.useState({});
-  const [errors, setErrors] = React.useState({});
-  const [isValid, setIsValid] = React.useState(false);
+  React.useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/profile");
+    }
+    // eslint-disable-next-line
+  }, [isLoggedIn]);
 
-  const handleChange = (e) => {
-    const target = e.target;
-    const name = target.name;
-    const value = target.value;
-
-    setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: target.validationMessage });
-    setIsValid(target.closest("form").checkValidity());
-  };
+  React.useEffect(() => {
+    resetForm();
+    // eslint-disable-next-line
+  }, []);
 
   function handleSubmit(e) {
     const { email, password } = values;
@@ -54,7 +56,9 @@ function Login({onLogin}) {
             value={values.email}
             onChange={handleChange}
           ></input>
-          <span className="form__input-description form__input-description_type_error">{errors.email}</span>
+          <span className="form__input-description form__input-description_type_error">
+            {errors.email}
+          </span>
         </div>
         <div className="form__input-container">
           <label className="form__input-description form__input-description_type_label">
@@ -72,7 +76,9 @@ function Login({onLogin}) {
             value={values.password}
             onChange={handleChange}
           ></input>
-          <span className="form__input-description form__input-description_type_error">{errors.password}</span>
+          <span className="form__input-description form__input-description_type_error">
+            {errors.password}
+          </span>
         </div>
       </Form>
     </main>
