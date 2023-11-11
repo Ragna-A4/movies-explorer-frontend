@@ -8,7 +8,7 @@ import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import { moviesApi } from "../../utils/MoviesApi";
 
-function Movies() {
+function Movies(props) {
   const [movies, setMovies] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -23,7 +23,7 @@ function Movies() {
 
   return (
     <main className="movies">
-      <Header />
+      <Header loggedIn ={props.loggedIn}/>
       <SearchBar />
       {isLoading ? <Preloader /> : <MoviesCardList movies={movies} />}
       <Footer />

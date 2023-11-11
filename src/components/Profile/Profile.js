@@ -6,7 +6,7 @@ import "./Profile.css";
 import Header from "../Header/Header";
 import { currentUserContext } from "../../contexts/CurrentUserContext";
 
-function Profile({ onUpdate, signOut }) {
+function Profile({ onUpdate, signOut, loggedIn }) {
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation();
 
@@ -25,7 +25,7 @@ function Profile({ onUpdate, signOut }) {
 
   return (
     <>
-      <Header />
+      <Header loggedIn={loggedIn} />
       <main className="profile">
         <h1 className="profile__title">Привет, {currentUser.name}</h1>
         <form className="profile__form" name="profile" onSubmit={handleSubmit}>

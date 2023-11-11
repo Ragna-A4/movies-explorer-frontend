@@ -1,6 +1,6 @@
 import React from "react";
 
-import HeaderMain from "../Header/HeaderMain";
+import Header from "../Header/Header";
 import Promo from "./Promo/Promo";
 import NavTab from "./NavTab/NavTab";
 import AboutProject from "./AboutProject/AboutProject";
@@ -10,10 +10,10 @@ import Footer from "../Footer/Footer";
 
 import "./Main.css";
 
-function Main() {
+function Main( { loggedIn }) {
   return (
     <main className="main">
-      <HeaderMain/>
+      <Header loggedIn={loggedIn}/>
       <Promo />
       <NavTab />
       <AboutProject />

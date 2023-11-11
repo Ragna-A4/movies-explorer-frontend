@@ -95,17 +95,25 @@ function App() {
       <div className="app">
         <div className="page">
           <Routes>
-            <Route path="/" element={<Main />} />
+            <Route path="/" element={<Main loggedIn={isLoggedIn} />} />
             <Route
               path="/movies"
               element={
-                <ProtectedRoute element={Movies} isLoggedIn={isLoggedIn} />
+                <ProtectedRoute
+                  element={Movies}
+                  isLoggedIn={isLoggedIn}
+                  loggedIn={isLoggedIn}
+                />
               }
             />
             <Route
               path="/saved-movies"
               element={
-                <ProtectedRoute element={SavedMovies} isLoggedIn={isLoggedIn} />
+                <ProtectedRoute
+                  element={SavedMovies}
+                  isLoggedIn={isLoggedIn}
+                  loggedIn={isLoggedIn}
+                />
               }
             />
             <Route
@@ -114,6 +122,7 @@ function App() {
                 <ProtectedRoute
                   element={Profile}
                   isLoggedIn={isLoggedIn}
+                  loggedIn={isLoggedIn}
                   onUpdate={handleUpdateUser}
                   signOut={signout}
                 />

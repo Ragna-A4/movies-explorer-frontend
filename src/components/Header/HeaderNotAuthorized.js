@@ -2,12 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./Header.css";
-import logo from "../../images/logo_bagel.svg";
 
-function Header() {
+function HeaderNotAuthorized() {
+
   return (
     <header className="header header_color_pink">
-      <img className="header__logo" alt="лого_бублик" src={logo} />
+      <Link to="/" className="header__logo" />
       <nav className="header__menu">
         <Link
           to="signup"
@@ -23,4 +23,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default HeaderNotAuthorized;
