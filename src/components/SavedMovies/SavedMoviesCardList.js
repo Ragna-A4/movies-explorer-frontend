@@ -22,12 +22,7 @@ function SavedMoviesCardList() {
           }
         })}
       </div>
-      <button
-        className="moviescardlist__button"
-        type="button"
-        style={{ background: "transparent" }}
-      >
-      </button>
+      <div className="moviescardlist__button-container" />
     </section>
   );
 }
