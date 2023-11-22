@@ -5,7 +5,7 @@ import Form from "../Form/Form";
 
 import "./Login.css";
 
-function Login({ isLoggedIn, onLogin }) {
+function Login({ isLoggedIn, onLogin, submitError }) {
   const navigate = useNavigate();
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation();
@@ -36,6 +36,7 @@ function Login({ isLoggedIn, onLogin }) {
         validityStatus={isValid}
         buttonName="Войти"
         onSubmit={handleSubmit}
+        onSubmitError={submitError}
         span="Ещё не зарегистрированы?"
         path="/signup"
         linkText="Регистрация"

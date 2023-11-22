@@ -4,13 +4,16 @@ import { Link } from "react-router-dom";
 import { useFormWithValidation } from "../../utils/UseFormWithValidation";
 import "./Profile.css";
 import Header from "../Header/Header";
+import InfoTooltip from "../InfoTooltip/InfoToolTip";
 import { currentUserContext } from "../../contexts/CurrentUserContext";
 
-function Profile({ onUpdate, signOut, loggedIn }) {
+function Profile({ onUpdate, signOut, loggedIn, isSuccess }) {
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation();
 
   const currentUser = React.useContext(currentUserContext);
+
+  const [isOpenPopup, setIsOpenPopup] = React.useState(false);
 
   React.useEffect(() => {
     if (currentUser) {
@@ -21,8 +24,14 @@ function Profile({ onUpdate, signOut, loggedIn }) {
   function handleSubmit(e) {
     e.preventDefault();
     onUpdate(values);
+    setIsOpenPopup(true);
   }
 
+  function closePopup() {
+    setIsOpenPopup(false);
+    resetForm(currentUser);
+  }
+  
   return (
     <>
       <Header loggedIn={loggedIn} />
@@ -67,7 +76,7 @@ function Profile({ onUpdate, signOut, loggedIn }) {
           </div>
           <button
             className={`profile__button profile__button_type_save ${
-              isValid !== true ? "profile__button_type_disabled" : ""
+              isValid !== true || (values.name === currentUser.name && values.email === currentUser.email) ? "profile__button_type_disabled" : ""
             }`}
             type="submit"
             disabled={!isValid}
@@ -83,6 +92,13 @@ function Profile({ onUpdate, signOut, loggedIn }) {
           Выйти из аккаунта
         </Link>
       </main>
+      <InfoTooltip
+        isSuccess={isSuccess}
+        successMessage="Данные успешно изменены!"
+        errorMessage="Что-то пошло не так! Попробуйте еще раз."
+        isOpen={isOpenPopup}
+        onClose={closePopup}
+      />
     </>
   );
 }

@@ -10,6 +10,7 @@ function Form({
   validityStatus,
   buttonName,
   onSubmit,
+  onSubmitError,
   span,
   path,
   linkText,
@@ -20,7 +21,14 @@ function Form({
       <h1 className="form__title">{title}</h1>
       <form className="form__container" name={name} onSubmit={onSubmit}>
         {children}
-        <button className={`form__button ${validityStatus !== true ? "form__button_type_disabled" : ""}`} type="submit" disabled={!validityStatus}>
+        <span className="form__onsubmit-error">{onSubmitError}</span>
+        <button
+          className={`form__button ${
+            validityStatus !== true ? "form__button_type_disabled" : ""
+          }`}
+          type="submit"
+          disabled={!validityStatus}
+        >
           {buttonName}
         </button>
       </form>

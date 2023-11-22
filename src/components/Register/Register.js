@@ -2,11 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormWithValidation } from "../../utils/UseFormWithValidation";
 import Form from "../Form/Form";
-import * as auth from "../../utils/Auth";
 
 import "./Register.css";
 
-function Register({ isLoggedIn }) {
+function Register({ isLoggedIn, onRegister, submitError }) {
   const navigate = useNavigate();
 
   const { values, handleChange, errors, isValid, resetForm } =
@@ -27,14 +26,8 @@ function Register({ isLoggedIn }) {
   function handleSubmit(e) {
     const { name, email, password } = values;
     e.preventDefault();
-    auth
-      .register(name, email, password)
-      .then(() => {
-        navigate("/signin");
-      })
-      .catch((err) => {
-        console.log(`Err: ${err}`);
-      });
+    onRegister(name, email, password);
+    
   }
 
   return (
@@ -45,6 +38,7 @@ function Register({ isLoggedIn }) {
         validityStatus={isValid}
         buttonName="Зарегистрироваться"
         onSubmit={handleSubmit}
+        onSubmitError={submitError}
         span="Уже зарегистрированы?"
         path="/signin"
         linkText="Войти"

@@ -19,17 +19,35 @@ function App() {
   const location = useLocation();
 
   const [isLoggedIn, setLoggedIn] = React.useState(false);
+  const [isSubmitError, setIsSubmitError] = React.useState("");
   const [currentUser, setCurrentUser] = React.useState({});
+  const [isSuccess, setIsSuccess] = React.useState(false);
 
+  //регистрация, в случае успеха сразу авторизуемся и переходим на страницу фильмов
+  function handleRegistration(name, email, password) {
+    auth
+      .register(name, email, password)
+      .then(() => {
+        handleLogin(email, password);
+      })
+      .catch((err) => {
+        setIsSubmitError(err);
+        console.log(`Err: ${err}`);
+      });
+  }
+
+  //авторизация, в случае успеха переходим на страницу фильмов
   function handleLogin(email, password) {
     auth
       .authorize(email, password)
       .then((data) => {
         setCurrentUser(data);
         setLoggedIn(true);
+        setIsSubmitError("");
         navigate("/movies");
       })
       .catch((err) => {
+        setIsSubmitError(err);
         console.log(`Err: ${err}`);
       });
   }
@@ -86,8 +104,12 @@ function App() {
       .patchProfile(name, email)
       .then((data) => {
         setCurrentUser(data);
+        setIsSuccess(true);
       })
-      .catch((err) => console.log(`Err: ${err}`));
+      .catch((err) => {
+        setIsSuccess(false);
+        console.log(`Err: ${err}`);
+      });
   }
 
   return (
@@ -125,16 +147,29 @@ function App() {
                   loggedIn={isLoggedIn}
                   onUpdate={handleUpdateUser}
                   signOut={signout}
+                  isSuccess={isSuccess}
                 />
               }
             />
             <Route
               path="/signin"
-              element={<Login onLogin={handleLogin} isLoggedIn={isLoggedIn} />}
+              element={
+                <Login
+                  onLogin={handleLogin}
+                  isLoggedIn={isLoggedIn}
+                  submitError={isSubmitError}
+                />
+              }
             />
             <Route
               path="/signup"
-              element={<Register isLoggedIn={isLoggedIn} />}
+              element={
+                <Register
+                  onRegister={handleRegistration}
+                  isLoggedIn={isLoggedIn}
+                  submitError={isSubmitError}
+                />
+              }
             />
             <Route path="*" element={<NotFound />} />
           </Routes>
