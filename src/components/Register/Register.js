@@ -27,7 +27,6 @@ function Register({ isLoggedIn, onRegister, submitError }) {
     const { name, email, password } = values;
     e.preventDefault();
     onRegister(name, email, password);
-    
   }
 
   return (
