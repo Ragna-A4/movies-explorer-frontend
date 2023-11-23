@@ -10,11 +10,15 @@ function MoviesCardList(props) {
 
   return (
     <section className="moviescardlist">
-      <div className="moviescardlist__container">
-        {props.movies.slice(0, moviesCounter).map(({ id, ...props }) => (
-          <MoviesCard key={id} {...props} />
-        ))}
-      </div>
+      {props.movies.length === 0 ? (
+        <p className="moviescardlist__no-result"> Ничего не найдено </p>
+      ) : (
+        <div className="moviescardlist__container">
+          {props.movies.slice(0, moviesCounter).map(({ id, ...props }) => (
+            <MoviesCard key={id} {...props} />
+          ))}
+        </div>
+      )}
       <button
         className={
           moviesCounter < props.movies.length

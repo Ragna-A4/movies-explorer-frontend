@@ -5,6 +5,14 @@
   padding: 0;
 }
 
+.moviescardlist__no-result {
+  display: flex;
+  margin: 70px auto 28px;
+  padding: 0;
+  text-align: center;
+  
+}
+
 .moviescardlist__container {
   display: grid;
   grid-template-columns: repeat(3, 360px);

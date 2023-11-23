@@ -16,13 +16,20 @@ function Movies(props) {
 
   React.useEffect(() => {
     setIsLoading(true);
-
-    moviesApi
-      .getMovies()
-      .then((data) => {
-        localStorage.setItem("fullMoviesList", JSON.stringify(data));
-      })
-      .finally(() => setIsLoading(false));
+    const previuosResult = JSON.parse(localStorage.getItem("SearchResult"));
+    console.log(previuosResult);
+    if (!previuosResult) {
+      moviesApi
+        .getMovies()
+        .then((data) => {
+          localStorage.setItem("fullMoviesList", JSON.stringify(data));
+        })
+        .finally(() => setIsLoading(false));
+    } else {
+      setMovies(previuosResult);
+      setSearchQuery(localStorage.getItem("SearchRequest"));
+      setIsLoading(false);
+    }
   }, []);
 
   function handleChange(e) {
@@ -34,7 +41,6 @@ function Movies(props) {
   function handleSubmit(e) {
     const fullMoviesList = JSON.parse(localStorage.getItem("fullMoviesList"));
     e.preventDefault();
-    console.log(fullMoviesList);
     const searchResult = fullMoviesList.filter(
       (data) =>
         data.nameRU
@@ -47,7 +53,8 @@ function Movies(props) {
           .includes(searchQuery.toLowerCase().trim())
     );
     setMovies(searchResult);
-    console.log(movies);
+    localStorage.setItem("SearchResult", JSON.stringify(searchResult));
+    localStorage.setItem("SearchRequest", searchQuery);
   }
 
   return (
