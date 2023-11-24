@@ -2,7 +2,7 @@ import React from "react";
 
 import "./MoviesCard.css";
 
-function MoviesCard({ image, nameRU, duration, owner }) {
+function MoviesCard({ image, nameRU, duration, owner, trailerLink }) {
   const isOwn = owner === "me";
   const cardButtonClassName = `moviescard__button ${
     isOwn
@@ -20,11 +20,18 @@ function MoviesCard({ image, nameRU, duration, owner }) {
 
   return (
     <div className="moviescard">
-      <img
-        className="moviescard__image"
-        alt={nameRU}
-        src={`https://api.nomoreparties.co/${image.url}`}
-      />
+      <a
+        className="moviescard__trailerlink-redirect"
+        target="_blank"
+        rel="noreferrer"
+        href={trailerLink}
+      >
+        <img
+          className="moviescard__image"
+          alt={nameRU}
+          src={`https://api.nomoreparties.co/${image.url}`}
+        />
+      </a>
       <button className={cardButtonClassName} type="button" />
       <div className="moviescard__container">
         <h2 className="moviescard__title">{nameRU}</h2>

@@ -31,6 +31,22 @@
   }
 }
 
+.moviescard__trailerlink-redirect {
+  text-decoration: none;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.moviescard__trailerlink-redirect:hover {
+  z-index: 0;
+}
+
+@media screen and (max-width: 767px) {
+  .moviescard__trailerlink-redirect {
+    z-index: 0;
+  }
+}
+
 .moviescard__button {
   position: absolute;
   top: 14px;
