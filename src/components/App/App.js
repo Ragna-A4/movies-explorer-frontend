@@ -97,6 +97,7 @@ function App() {
           localStorage.removeItem("fullMoviesList");
           localStorage.removeItem("SearchRequest");
           localStorage.removeItem("SearchResult");
+          localStorage.removeItem("ShortMoviesStatus");
         }
       })
       .catch((err) => console.log(`Err: ${err}`));
