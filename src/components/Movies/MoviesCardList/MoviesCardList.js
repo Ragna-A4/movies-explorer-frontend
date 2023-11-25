@@ -14,8 +14,14 @@ function MoviesCardList(props) {
         <p className="moviescardlist__no-result"> Ничего не найдено </p>
       ) : (
         <div className="moviescardlist__container">
-          {props.movies.slice(0, moviesCounter).map(({ id, ...props }) => (
-            <MoviesCard key={id} {...props} />
+          {props.movies.slice(0, moviesCounter).map((movie) => (
+            <MoviesCard 
+            key={movie.id}
+            movie={movie}
+            onMovieAdd={props.onMovieAdd}
+            onMovieDelete={props.onMovieDelete}
+            isSaved={props.isSaved}
+              />
           ))}
         </div>
       )}

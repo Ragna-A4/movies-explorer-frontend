@@ -7,118 +7,115 @@ import Preloader from "./Preloader/Preloader";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import { moviesApi } from "../../utils/MoviesApi";
+import { mainApi } from "../../utils/MainApi";
+import { SearchRequest } from "../../utils/SearchRequest";
+import { currentUserContext} from "../../contexts/CurrentUserContext";
 
 function Movies(props) {
+  const currentUser = React.useContext(currentUserContext);
+  // поисковый запрос
   const [searchQuery, setSearchQuery] = React.useState("");
+  // ошибка, связанная со вводом поискового запроса
   const [searchError, setSearchError] = React.useState("");
+  // фильтр короткометражек
   const [isActiveBar, setIsActiveBar] = React.useState(false);
+  // фильмы со стороннего апи
   const [movies, setMovies] = React.useState([]);
+  // фильмы, сохраненные пользователем
+  const [savedMovies, setSavedMovies] = React.useState([]);
+  // статус загрузки
   const [isLoading, setIsLoading] = React.useState(false);
 
+  // при отрисовке страницы сохраняем в LS фильмы со стороннего апи, в переменную сохраненные фильмы
   React.useEffect(() => {
-    setIsLoading(true);
-    const previuosResult = JSON.parse(localStorage.getItem("SearchResult"));
-    console.log(previuosResult);
-    if (!previuosResult) {
-      moviesApi
-        .getMovies()
-        .then((data) => {
-          localStorage.setItem("fullMoviesList", JSON.stringify(data));
-        })
-        .finally(() => setIsLoading(false));
-    } else {
-      setMovies(previuosResult);
-      setSearchQuery(localStorage.getItem("SearchRequest"));
-      setIsActiveBar(localStorage.getItem("ShortMoviesStatus"));
-      setIsLoading(false);
+    Promise.all([moviesApi.getMovies(), mainApi.getMovies()])
+      .then((data) => {
+        localStorage.setItem("fullMoviesList", JSON.stringify(data[0]));
+        setSavedMovies(data[1]);
+      })
+      .catch((err) => console.log(`Err: ${err}`));
+  }, []);
+
+  // при отрисовке страницы выводим последний запрос, фильтр и список фильмов или ничего
+  React.useEffect(() => {
+    const previousRequest = localStorage.getItem("SearchRequest");
+    const previousBarStatus = localStorage.getItem("ShortMoviesStatus");
+    const previousResult = JSON.parse(localStorage.getItem("SearchResult"));
+
+    if (previousRequest) {
+      setSearchQuery(previousRequest);
+    }
+    if (previousBarStatus) {
+      setIsActiveBar(previousBarStatus);
+    }
+    if (previousResult) {
+      setMovies(previousResult);
     }
   }, []);
 
-  React.useEffect(() => {
-    const currentShortMoviesStatus = localStorage.getItem("ShortMoviesStatus");
-    const currentSearchResult = JSON.parse(
-      localStorage.getItem("SearchResult")
-    );
-    const fullMoviesList = JSON.parse(localStorage.getItem("fullMoviesList"));
-    if (
-      isActiveBar === currentShortMoviesStatus ||
-      currentShortMoviesStatus === null
-    ) {
-      return;
-    } else if (isActiveBar === true) {
-      const newSearchResult = currentSearchResult.filter(
-        (item) => item.duration <= 60
-      );
-      localStorage.setItem("ShortMoviesStatus", isActiveBar);
-      localStorage.setItem("SearchResult", JSON.stringify(newSearchResult));
-      setMovies(newSearchResult);
-    } else {
-      const newSearchResult = fullMoviesList.filter(
-        (item) =>
-          item.nameRU
-            .toLowerCase()
-            .trim()
-            .includes(searchQuery.toLowerCase().trim()) ||
-          item.nameEN
-            .toLowerCase()
-            .trim()
-            .includes(searchQuery.toLowerCase().trim())
-      );
-      localStorage.setItem("ShortMoviesStatus", isActiveBar);
-      localStorage.setItem("SearchResult", JSON.stringify(newSearchResult));
-      setMovies(newSearchResult);
-    }
-    // eslint-disable-next-line
-  }, [isActiveBar]);
-
+  // отслеживаем ввод в поисковой строке
   function handleChange(e) {
     const target = e.target;
     setSearchQuery(target.value);
     setSearchError(target.validationMessage);
   }
 
+  // переключатель фильтра короткометражек
   function handleClick() {
     setIsActiveBar(!isActiveBar);
   }
 
-  function handleSubmit(e) {
-    const fullMoviesList = JSON.parse(localStorage.getItem("fullMoviesList"));
-    e.preventDefault();
-    if (isActiveBar === true) {
-      const searchResult = fullMoviesList
-        .filter((data) => data.duration <= 60)
-        .filter(
-          (data) =>
-            data.nameRU
-              .toLowerCase()
-              .trim()
-              .includes(searchQuery.toLowerCase().trim()) ||
-            data.nameEN
-              .toLowerCase()
-              .trim()
-              .includes(searchQuery.toLowerCase().trim())
-        );
-      setMovies(searchResult);
-      localStorage.setItem("SearchResult", JSON.stringify(searchResult));
-      localStorage.setItem("SearchRequest", searchQuery);
-      localStorage.setItem("ShortMoviesStatus", isActiveBar);
+  React.useEffect(() => {
+    if (searchQuery === "") {
+      return;
     } else {
-      const searchResult = fullMoviesList.filter(
-        (data) =>
-          data.nameRU
-            .toLowerCase()
-            .trim()
-            .includes(searchQuery.toLowerCase().trim()) ||
-          data.nameEN
-            .toLowerCase()
-            .trim()
-            .includes(searchQuery.toLowerCase().trim())
+      const fullMoviesList = JSON.parse(localStorage.getItem("fullMoviesList"));
+      const filteredResult = SearchRequest(
+        fullMoviesList,
+        searchQuery,
+        isActiveBar
       );
-      setMovies(searchResult);
-      localStorage.setItem("SearchResult", JSON.stringify(searchResult));
-      localStorage.setItem("SearchRequest", searchQuery);
+      setMovies(filteredResult);
+      localStorage.setItem("SearchResult", JSON.stringify(filteredResult));
       localStorage.setItem("ShortMoviesStatus", isActiveBar);
     }
+  }, [isActiveBar]);
+
+  // активируем поиск по данным из поисковой строки+фильтра, сохраняем данные в LS
+  function handleSubmit(e) {
+    e.preventDefault();
+    setIsLoading(true);
+    const fullMoviesList = JSON.parse(localStorage.getItem("fullMoviesList"));
+    const searchResult = SearchRequest(
+      fullMoviesList,
+      searchQuery,
+      isActiveBar
+    );
+    setMovies(searchResult);
+    setIsLoading(false);
+    localStorage.setItem("SearchResult", JSON.stringify(searchResult));
+    localStorage.setItem("SearchRequest", searchQuery);
+    localStorage.setItem("ShortMoviesStatus", isActiveBar);
+  }
+
+  function handleMovieAdd(movie) {
+    console.log(movie);
+    mainApi
+      .addMovie(movie)
+      .then((data) => {
+        setSavedMovies([data, ...movies]);
+        console.log(savedMovies);
+      })
+      .catch((err) => console.log(`Err: ${err}`));
+  }
+
+  function handleMovieDelete(movie) {
+    mainApi
+      .deleteMovie(movie._id)
+      .then(() => {
+        setSavedMovies((state) => state.filter((c) => c._id !== movie._id));
+      })
+      .catch((err) => console.log(`Err: ${err}`));
   }
 
   return (
@@ -133,7 +130,16 @@ function Movies(props) {
         value={searchQuery}
         error={searchError}
       />
-      {isLoading ? <Preloader /> : <MoviesCardList movies={movies} />}
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        <MoviesCardList
+          movies={movies}
+          isSaved={savedMovies.owner === currentUser._id ? true : false}
+          onMovieAdd={handleMovieAdd}
+          onMovieDelete={handleMovieDelete}
+        />
+      )}
       <Footer />
     </main>
   );

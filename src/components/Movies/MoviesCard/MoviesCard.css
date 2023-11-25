@@ -4,6 +4,22 @@
   position: relative;
 }
 
+.moviescard__trailerlink-redirect {
+  text-decoration: none;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.moviescard__trailerlink-redirect:hover {
+  z-index: 0;
+}
+
+@media screen and (max-width: 767px) {
+  .moviescard__trailerlink-redirect {
+    z-index: 0;
+  }
+}
+
 .moviescard__image {
   margin: 0 auto 14px;
   z-index: 1;
@@ -31,22 +47,6 @@
   }
 }
 
-.moviescard__trailerlink-redirect {
-  text-decoration: none;
-  cursor: pointer;
-  z-index: 1;
-}
-
-.moviescard__trailerlink-redirect:hover {
-  z-index: 0;
-}
-
-@media screen and (max-width: 767px) {
-  .moviescard__trailerlink-redirect {
-    z-index: 0;
-  }
-}
-
 .moviescard__button {
   position: absolute;
   top: 14px;
@@ -57,6 +57,12 @@
   background-color: transparent;
   width: 21px;
   height: 21px;
+  z-index: 0;
+}
+
+.moviescard__button:hover {
+  cursor: pointer;
+  z-index: 2;
 }
 
 .moviescard__button_type_tosave {
@@ -66,7 +72,6 @@
 
 .moviescard__button_type_downloaded {
   background-image: url("../../../images/icon_added.svg");
-  z-index: 1;
 }
 
 .moviescard__button_type_todelete {

@@ -23,7 +23,7 @@ class MainApi {
       credentials: "include",
       headers: this._headers,
       body: JSON.stringify({
-        nameRU: data.nameRu,
+        nameRU: data.nameRU,
         nameEN: data.nameEN,
         description: data.description,
         country: data.country,
@@ -33,7 +33,7 @@ class MainApi {
         trailerLink: data.trailerLink,
         image: `https://api.nomoreparties.co/${data.image.url}`,
         thumbnail: `https://api.nomoreparties.co/${data.image.formats.thumbnail.url}`,
-        ownerID: data.ownerID,
+        movieId: data.id,
       }),
     }).then((res) => this._checkResult(res));
   }

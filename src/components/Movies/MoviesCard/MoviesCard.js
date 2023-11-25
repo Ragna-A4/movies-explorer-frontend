@@ -2,13 +2,7 @@ import React from "react";
 
 import "./MoviesCard.css";
 
-function MoviesCard({ image, nameRU, duration, owner, trailerLink }) {
-  const isOwn = owner === "me";
-  const cardButtonClassName = `moviescard__button ${
-    isOwn
-      ? "moviescard__button_type_downloaded"
-      : "moviescard__button_type_tosave"
-  }`;
+function MoviesCard({ movie, onMovieAdd, onMovieDelete, isSaved }) {
 
   function formatDuration(time) {
     if (time < 60) {
@@ -18,24 +12,45 @@ function MoviesCard({ image, nameRU, duration, owner, trailerLink }) {
     }
   }
 
+  function handleAddClick() {
+    onMovieAdd(movie);
+  }
+
+  function handleDeleteClick() {
+    onMovieDelete(movie);
+  }
+
   return (
     <div className="moviescard">
       <a
         className="moviescard__trailerlink-redirect"
         target="_blank"
         rel="noreferrer"
-        href={trailerLink}
+        href={movie.trailerLink}
       >
         <img
           className="moviescard__image"
-          alt={nameRU}
-          src={`https://api.nomoreparties.co/${image.url}`}
+          alt={movie.nameRU}
+          src={`https://api.nomoreparties.co/${movie.image.url}`}
         />
       </a>
-      <button className={cardButtonClassName} type="button" />
+      {isSaved === true ? (
+        <button
+          className="moviescard__button moviescard__button_type_downloaded"
+          type="button"
+          onClick={handleDeleteClick}
+        ></button>
+      ) : (
+        <button
+          className="moviescard__button moviescard__button_type_tosave"
+          type="button"
+          onClick={handleAddClick}
+        ></button>
+      )}
+
       <div className="moviescard__container">
-        <h2 className="moviescard__title">{nameRU}</h2>
-        <p className="moviescard__duration">{formatDuration(duration)}</p>
+        <h2 className="moviescard__title">{movie.nameRU}</h2>
+        <p className="moviescard__duration">{formatDuration(movie.duration)}</p>
       </div>
     </div>
   );
