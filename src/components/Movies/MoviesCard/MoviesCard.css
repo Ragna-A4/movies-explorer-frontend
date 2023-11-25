@@ -72,6 +72,7 @@
 
 .moviescard__button_type_downloaded {
   background-image: url("../../../images/icon_added.svg");
+  z-index: 2;
 }
 
 .moviescard__button_type_todelete {
