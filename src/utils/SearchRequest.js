@@ -8,23 +8,13 @@ export function SearchRequest(data, query, status) {
             .toLowerCase()
             .trim()
             .includes(query.toLowerCase().trim()) ||
-          item.nameEN
-            .toLowerCase()
-            .trim()
-            .includes(query.toLowerCase().trim())
+          item.nameEN.toLowerCase().trim().includes(query.toLowerCase().trim())
       );
   } else {
-    return data
-      .filter(
-        (item) =>
-          item.nameRU
-            .toLowerCase()
-            .trim()
-            .includes(query.toLowerCase().trim()) ||
-          item.nameEN
-            .toLowerCase()
-            .trim()
-            .includes(query.toLowerCase().trim())
-      );
+    return data.filter(
+      (item) =>
+        item.nameRU.toLowerCase().trim().includes(query.toLowerCase().trim()) ||
+        item.nameEN.toLowerCase().trim().includes(query.toLowerCase().trim())
+    );
   }
 }

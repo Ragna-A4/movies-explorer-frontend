@@ -10,10 +10,10 @@ import Footer from "../Footer/Footer";
 
 import "./Main.css";
 
-function Main( { loggedIn }) {
+function Main({ loggedIn }) {
   return (
     <main className="main">
-      <Header loggedIn={loggedIn}/>
+      <Header loggedIn={loggedIn} />
       <Promo />
       <NavTab />
       <AboutProject />

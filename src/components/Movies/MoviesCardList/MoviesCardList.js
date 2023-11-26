@@ -9,8 +9,7 @@ function MoviesCardList(props) {
   const { moviesCounter, addMovies } = useMoviesCounter(width);
 
   function isSaved(movie) {
-    const checkIsSaved =
-      JSON.parse(localStorage.getItem("SavedMoviesList"));
+    const checkIsSaved = JSON.parse(localStorage.getItem("SavedMoviesList"));
     if (!checkIsSaved) {
       return;
     }

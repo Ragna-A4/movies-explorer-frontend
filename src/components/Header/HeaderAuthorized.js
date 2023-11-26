@@ -21,7 +21,9 @@ function HeaderAuthorized() {
   return (
     <>
       <header
-        className={`header ${location.pathname === "/" ? "header_color_pink" : ""}`}
+        className={`header ${
+          location.pathname === "/" ? "header_color_pink" : ""
+        }`}
       >
         <Link to="/" className="header__logo" />
         <nav className="header__menu header__menu_type_authorized">
@@ -32,7 +34,9 @@ function HeaderAuthorized() {
             Фильмы
           </Link>
           <Link
-            to={`${location.pathname === "/saved-movies" ? "" : "/saved-movies"}`}
+            to={`${
+              location.pathname === "/saved-movies" ? "" : "/saved-movies"
+            }`}
             className="header__menu-item header__menu-item_type_authorized"
           >
             Сохранённые фильмы
