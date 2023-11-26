@@ -6,6 +6,7 @@ import "./Profile.css";
 import Header from "../Header/Header";
 import InfoTooltip from "../InfoTooltip/InfoToolTip";
 import { currentUserContext } from "../../contexts/CurrentUserContext";
+import { namePattern, emailPattern } from "../../utils/Patterns";
 
 function Profile({ onUpdate, signOut, loggedIn, isSuccess }) {
   const { values, handleChange, errors, isValid, resetForm } =
@@ -48,6 +49,7 @@ function Profile({ onUpdate, signOut, loggedIn, isSuccess }) {
                 id="name"
                 autoComplete="name"
                 required
+                pattern={namePattern}
                 minLength="2"
                 maxLength="30"
                 value={values.name || ""}
@@ -66,6 +68,7 @@ function Profile({ onUpdate, signOut, loggedIn, isSuccess }) {
                 id="email"
                 autoComplete="email"
                 required
+                pattern={emailPattern}
                 minLength="2"
                 maxLength="30"
                 value={values.email || ""}

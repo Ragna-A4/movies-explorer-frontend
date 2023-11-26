@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormWithValidation } from "../../utils/UseFormWithValidation";
+import { namePattern, emailPattern } from "../../utils/Patterns";
 import Form from "../Form/Form";
 
 import "./Register.css";
@@ -53,6 +54,7 @@ function Register({ isLoggedIn, onRegister, submitError }) {
             id="name"
             autoComplete="name"
             required
+            pattern={namePattern}
             minLength="2"
             maxLength="30"
             value={values.name || ""}
@@ -73,6 +75,7 @@ function Register({ isLoggedIn, onRegister, submitError }) {
             id="email"
             autoComplete="email"
             required
+            pattern={emailPattern}
             minLength="2"
             maxLength="30"
             value={values.email || ""}

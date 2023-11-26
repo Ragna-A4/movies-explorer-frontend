@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormWithValidation } from "../../utils/UseFormWithValidation";
+import { emailPattern } from "../../utils/Patterns";
 import Form from "../Form/Form";
 
 import "./Login.css";
@@ -52,6 +53,7 @@ function Login({ isLoggedIn, onLogin, submitError }) {
             id="email"
             autoComplete="email"
             required
+            pattern={emailPattern}
             minLength="2"
             maxLength="30"
             value={values.email || ""}
