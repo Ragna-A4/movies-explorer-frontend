@@ -55,7 +55,7 @@ function Register({ isLoggedIn, onRegister, submitError }) {
             required
             minLength="2"
             maxLength="30"
-            value={values.name}
+            value={values.name || ""}
             onChange={handleChange}
           ></input>
           <span className="form__input-description form__input-description_type_error">
@@ -75,7 +75,7 @@ function Register({ isLoggedIn, onRegister, submitError }) {
             required
             minLength="2"
             maxLength="30"
-            value={values.email}
+            value={values.email || ""}
             onChange={handleChange}
           ></input>
           <span className="form__input-description form__input-description_type_error">
@@ -95,7 +95,7 @@ function Register({ isLoggedIn, onRegister, submitError }) {
             required
             minLength="8"
             maxLength="20"
-            value={values.password}
+            value={values.password || ""}
             onChange={handleChange}
           ></input>
           <span className="form__input-description form__input-description_type_error">

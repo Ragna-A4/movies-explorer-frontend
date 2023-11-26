@@ -94,10 +94,7 @@ function App() {
           setLoggedIn(false);
           setCurrentUser({});
           navigate("/signin", { replace: true });
-          localStorage.removeItem("fullMoviesList");
-          localStorage.removeItem("SearchRequest");
-          localStorage.removeItem("SearchResult");
-          localStorage.removeItem("ShortMoviesStatus");
+          localStorage.clear();
         }
       })
       .catch((err) => console.log(`Err: ${err}`));

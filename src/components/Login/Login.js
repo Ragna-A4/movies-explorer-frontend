@@ -54,7 +54,7 @@ function Login({ isLoggedIn, onLogin, submitError }) {
             required
             minLength="2"
             maxLength="30"
-            value={values.email}
+            value={values.email || ""}
             onChange={handleChange}
           ></input>
           <span className="form__input-description form__input-description_type_error">
@@ -74,7 +74,7 @@ function Login({ isLoggedIn, onLogin, submitError }) {
             required
             minLength="8"
             maxLength="20"
-            value={values.password}
+            value={values.password || ""}
             onChange={handleChange}
           ></input>
           <span className="form__input-description form__input-description_type_error">

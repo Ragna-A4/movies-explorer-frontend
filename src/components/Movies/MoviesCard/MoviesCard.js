@@ -2,7 +2,7 @@ import React from "react";
 
 import "./MoviesCard.css";
 
-function MoviesCard({ movie, onMovieAdd, onMovieDelete, isSaved }) {
+function MoviesCard({ movie, onMovieAdd, onMovieDelete, checkMovieIsSaved }) {
 
   function formatDuration(time) {
     if (time < 60) {
@@ -10,6 +10,10 @@ function MoviesCard({ movie, onMovieAdd, onMovieDelete, isSaved }) {
     } else {
       return `${Math.floor(time / 60)}ч ${time % 60}м`;
     }
+  }
+
+  function isSaved() {
+    checkMovieIsSaved(movie);
   }
 
   function handleAddClick() {

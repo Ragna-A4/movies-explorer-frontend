@@ -31,7 +31,7 @@ function Profile({ onUpdate, signOut, loggedIn, isSuccess }) {
     setIsOpenPopup(false);
     resetForm(currentUser);
   }
-  
+
   return (
     <>
       <Header loggedIn={loggedIn} />
@@ -76,7 +76,11 @@ function Profile({ onUpdate, signOut, loggedIn, isSuccess }) {
           </div>
           <button
             className={`profile__button profile__button_type_save ${
-              isValid !== true || (values.name === currentUser.name && values.email === currentUser.email) ? "profile__button_type_disabled" : ""
+              isValid !== true ||
+              (values.name === currentUser.name &&
+                values.email === currentUser.email)
+                ? "profile__button_type_disabled"
+                : ""
             }`}
             type="submit"
             disabled={!isValid}

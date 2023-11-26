@@ -25,6 +25,7 @@ function SavedMovies(props) {
     mainApi
       .getMovies()
       .then((data) => {
+        localStorage.setItem("SavedMoviesList", JSON.stringify(data));
         setSavedMovies(data);
       })
       .catch((err) => console.log(`Err: ${err}`));
@@ -39,7 +40,16 @@ function SavedMovies(props) {
 
   // переключатель фильтра короткометражек
   function handleClick() {
+    const currentSavedMoviesList = JSON.parse(
+      localStorage.getItem("SavedMoviesList")
+    );
     setIsActiveBar(!isActiveBar);
+    const filteredResult = SearchRequest(
+      currentSavedMoviesList,
+      searchQuery,
+      !isActiveBar
+    );
+    setSavedMovies(filteredResult);
   }
 
   //React.useEffect(() => {
@@ -49,7 +59,14 @@ function SavedMovies(props) {
   function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
-    const searchResult = SearchRequest(savedMovies, searchQuery, isActiveBar);
+    const fullSavedMoviesList = JSON.parse(
+      localStorage.getItem("SavedMoviesList")
+    );
+    const searchResult = SearchRequest(
+      fullSavedMoviesList,
+      searchQuery,
+      isActiveBar
+    );
     setSavedMovies(searchResult);
     setIsLoading(false);
   }
@@ -58,7 +75,10 @@ function SavedMovies(props) {
     mainApi
       .deleteMovie(movie._id)
       .then(() => {
-        setSavedMovies((state) => state.filter((c) => c._id !== movie._id));
+        const newSavedMovies = (state) =>
+          state.filter((c) => c._id !== movie._id);
+        setSavedMovies(newSavedMovies);
+        localStorage.setItem("SavedMoviesList", JSON.stringify(savedMovies));
       })
       .catch((err) => console.log(`Err: ${err}`));
   }

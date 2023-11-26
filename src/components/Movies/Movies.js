@@ -9,7 +9,7 @@ import Footer from "../Footer/Footer";
 import { moviesApi } from "../../utils/MoviesApi";
 import { mainApi } from "../../utils/MainApi";
 import { SearchRequest } from "../../utils/SearchRequest";
-import { currentUserContext} from "../../contexts/CurrentUserContext";
+import { currentUserContext } from "../../contexts/CurrentUserContext";
 
 function Movies(props) {
   const currentUser = React.useContext(currentUserContext);
@@ -18,7 +18,9 @@ function Movies(props) {
   // ошибка, связанная со вводом поискового запроса
   const [searchError, setSearchError] = React.useState("");
   // фильтр короткометражек
-  const [isActiveBar, setIsActiveBar] = React.useState(false);
+  const [isActiveBar, setIsActiveBar] = React.useState(
+    localStorage.getItem("ShortMoviesStatus") || false
+  );
   // фильмы со стороннего апи
   const [movies, setMovies] = React.useState([]);
   // фильмы, сохраненные пользователем
@@ -48,6 +50,7 @@ function Movies(props) {
     if (previousBarStatus) {
       setIsActiveBar(previousBarStatus);
     }
+
     if (previousResult) {
       setMovies(previousResult);
     }
@@ -62,10 +65,8 @@ function Movies(props) {
 
   // переключатель фильтра короткометражек
   function handleClick() {
-    setIsActiveBar(!isActiveBar);
-  }
-
-  React.useEffect(() => {
+    const newBarStatus = !isActiveBar;
+    setIsActiveBar(newBarStatus);
     if (searchQuery === "") {
       return;
     } else {
@@ -73,13 +74,13 @@ function Movies(props) {
       const filteredResult = SearchRequest(
         fullMoviesList,
         searchQuery,
-        isActiveBar
+        newBarStatus
       );
       setMovies(filteredResult);
       localStorage.setItem("SearchResult", JSON.stringify(filteredResult));
-      localStorage.setItem("ShortMoviesStatus", isActiveBar);
+      localStorage.setItem("ShortMoviesStatus", newBarStatus);
     }
-  }, [isActiveBar]);
+  }
 
   // активируем поиск по данным из поисковой строки+фильтра, сохраняем данные в LS
   function handleSubmit(e) {
@@ -98,13 +99,17 @@ function Movies(props) {
     localStorage.setItem("ShortMoviesStatus", isActiveBar);
   }
 
+  function checkMovieIsSaved(movie) {
+    return savedMovies.some((item) =>
+      item.movieId === movie.id && item.owner === currentUser._id ? true : false
+    );
+  }
+
   function handleMovieAdd(movie) {
-    console.log(movie);
     mainApi
       .addMovie(movie)
       .then((data) => {
         setSavedMovies([data, ...movies]);
-        console.log(savedMovies);
       })
       .catch((err) => console.log(`Err: ${err}`));
   }
@@ -135,7 +140,7 @@ function Movies(props) {
       ) : (
         <MoviesCardList
           movies={movies}
-          isSaved={savedMovies.owner === currentUser._id ? true : false}
+          checkMovieIsSaved={checkMovieIsSaved}
           onMovieAdd={handleMovieAdd}
           onMovieDelete={handleMovieDelete}
         />

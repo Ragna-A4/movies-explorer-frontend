@@ -20,7 +20,7 @@ function MoviesCardList(props) {
             movie={movie}
             onMovieAdd={props.onMovieAdd}
             onMovieDelete={props.onMovieDelete}
-            isSaved={props.isSaved}
+            checkMovieIsSaved={props.checkMovieIsSaved}
               />
           ))}
         </div>
