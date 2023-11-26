@@ -8,6 +8,22 @@ function MoviesCardList(props) {
   const width = useWidth();
   const { moviesCounter, addMovies } = useMoviesCounter(width);
 
+  function isSaved(movie) {
+    const checkIsSaved =
+      JSON.parse(localStorage.getItem("SavedMoviesList"));
+    if (!checkIsSaved) {
+      return;
+    }
+    return checkIsSaved.some((item) => {
+      if (item.movieId === movie.id) {
+        movie._id = item._id;
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+
   return (
     <section className="moviescardlist">
       {props.movies.length === 0 ? (
@@ -15,13 +31,13 @@ function MoviesCardList(props) {
       ) : (
         <div className="moviescardlist__container">
           {props.movies.slice(0, moviesCounter).map((movie) => (
-            <MoviesCard 
-            key={movie.id}
-            movie={movie}
-            onMovieAdd={props.onMovieAdd}
-            onMovieDelete={props.onMovieDelete}
-            checkMovieIsSaved={props.checkMovieIsSaved}
-              />
+            <MoviesCard
+              key={movie.id}
+              movie={movie}
+              onMovieAdd={props.onMovieAdd}
+              onMovieDelete={props.onMovieDelete}
+              isSaved={isSaved(movie)}
+            />
           ))}
         </div>
       )}

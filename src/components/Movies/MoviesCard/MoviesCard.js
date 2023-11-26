@@ -2,18 +2,13 @@ import React from "react";
 
 import "./MoviesCard.css";
 
-function MoviesCard({ movie, onMovieAdd, onMovieDelete, checkMovieIsSaved }) {
-
+function MoviesCard({ movie, onMovieAdd, onMovieDelete, isSaved }) {
   function formatDuration(time) {
     if (time < 60) {
       return `${time}м`;
     } else {
       return `${Math.floor(time / 60)}ч ${time % 60}м`;
     }
-  }
-
-  function isSaved() {
-    checkMovieIsSaved(movie);
   }
 
   function handleAddClick() {
@@ -38,13 +33,14 @@ function MoviesCard({ movie, onMovieAdd, onMovieDelete, checkMovieIsSaved }) {
           src={`https://api.nomoreparties.co/${movie.image.url}`}
         />
       </a>
-      {isSaved === true ? (
+      {isSaved === true && (
         <button
           className="moviescard__button moviescard__button_type_downloaded"
           type="button"
           onClick={handleDeleteClick}
         ></button>
-      ) : (
+      )}
+      {isSaved === false && (
         <button
           className="moviescard__button moviescard__button_type_tosave"
           type="button"

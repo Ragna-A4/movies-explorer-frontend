@@ -17,7 +17,9 @@ function SavedMovies(props) {
   // фильтр короткометражек
   const [isActiveBar, setIsActiveBar] = React.useState(false);
   // фильмы, сохраненные пользователем
-  const [savedMovies, setSavedMovies] = React.useState([]);
+  const [savedMovies, setSavedMovies] = React.useState(
+    JSON.parse(localStorage.getItem("SavedMoviesList")) || []
+  );
   // статус загрузки
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -52,10 +54,6 @@ function SavedMovies(props) {
     setSavedMovies(filteredResult);
   }
 
-  //React.useEffect(() => {
-  //  setSavedMovies(SearchRequest(SavedMovies, searchQuery, isActiveBar));
-  //}, [isActiveBar]);
-
   function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
@@ -75,10 +73,9 @@ function SavedMovies(props) {
     mainApi
       .deleteMovie(movie._id)
       .then(() => {
-        const newSavedMovies = (state) =>
-          state.filter((c) => c._id !== movie._id);
+        const newSavedMovies = savedMovies.filter((c) => c._id !== movie._id);
         setSavedMovies(newSavedMovies);
-        localStorage.setItem("SavedMoviesList", JSON.stringify(savedMovies));
+        localStorage.setItem("SavedMoviesList", JSON.stringify(newSavedMovies));
       })
       .catch((err) => console.log(`Err: ${err}`));
   }
