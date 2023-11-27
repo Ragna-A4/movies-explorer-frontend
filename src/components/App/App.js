@@ -93,7 +93,7 @@ function App() {
         if (res) {
           setLoggedIn(false);
           setCurrentUser({});
-          navigate("/signin", { replace: true });
+          navigate("/", { replace: true });
           localStorage.clear();
         }
       })
