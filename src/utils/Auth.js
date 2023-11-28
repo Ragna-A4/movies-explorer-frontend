@@ -1,5 +1,5 @@
-// export const baseUrl = "http://localhost:3000"
-export const baseUrl = "https://api.movies.av4.nomoredomainsicu.ru";
+ export const baseUrl = "http://localhost:3000"
+//export const baseUrl = "https://api.movies.av4.nomoredomainsicu.ru";
 
 function checkResult(res) {
   if (res.ok) return res.json();
