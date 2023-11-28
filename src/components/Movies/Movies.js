@@ -176,7 +176,12 @@ function Movies(props) {
     mainApi
       .deleteMovie(movie._id)
       .then(() => {
-        const newSavedMovies = savedMovies.filter((c) => c._id !== movie._id);
+        const fullSavedMoviesList = JSON.parse(
+          localStorage.getItem("SavedMoviesList")
+        );
+        const newSavedMovies = fullSavedMoviesList.filter(
+          (c) => c._id !== movie._id
+        );
         setSavedMovies(newSavedMovies);
         localStorage.setItem("SavedMoviesList", JSON.stringify(newSavedMovies));
       })
