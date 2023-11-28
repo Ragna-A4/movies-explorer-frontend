@@ -15,13 +15,15 @@ function SavedMovies(props) {
   // ошибка, связанная со вводом поискового запроса
   const [searchError, setSearchError] = React.useState("");
   // фильтр короткометражек
-  const [isActiveBar, setIsActiveBar] = React.useState(false);
+  const [savedMoviesToggle, setSavedMoviesToggle] = React.useState(false);
   // фильмы, сохраненные пользователем
   const [savedMovies, setSavedMovies] = React.useState(
     JSON.parse(localStorage.getItem("SavedMoviesList")) || []
   );
   // статус загрузки
   const [isLoading, setIsLoading] = React.useState(false);
+  // текстовое сообщение об отсутствии фильмов по результатам поиска
+  const [notFoundMovies, setIsNotFoundMovies] = React.useState("");
 
   React.useEffect(() => {
     mainApi
@@ -45,11 +47,11 @@ function SavedMovies(props) {
     const currentSavedMoviesList = JSON.parse(
       localStorage.getItem("SavedMoviesList")
     );
-    setIsActiveBar(!isActiveBar);
+    setSavedMoviesToggle(!savedMoviesToggle);
     const filteredResult = SearchRequest(
       currentSavedMoviesList,
       searchQuery,
-      !isActiveBar
+      !savedMoviesToggle
     );
     setSavedMovies(filteredResult);
   }
@@ -63,8 +65,11 @@ function SavedMovies(props) {
     const searchResult = SearchRequest(
       fullSavedMoviesList,
       searchQuery,
-      isActiveBar
+      savedMoviesToggle
     );
+    if (searchResult.length < 1) {
+      setIsNotFoundMovies("Ничего не найдено");
+    }
     setSavedMovies(searchResult);
     setIsLoading(false);
   }
@@ -88,7 +93,7 @@ function SavedMovies(props) {
         handleSubmit={handleSubmit}
         handleChange={handleChange}
         onClick={handleClick}
-        isActiveBar={isActiveBar}
+        isActiveBar={savedMoviesToggle}
         value={searchQuery}
         error={searchError}
       />
@@ -96,6 +101,7 @@ function SavedMovies(props) {
         <Preloader />
       ) : (
         <SavedMoviesCardList
+          searchResultMessage={notFoundMovies}
           movies={savedMovies}
           onMovieDelete={handleMovieDelete}
         />

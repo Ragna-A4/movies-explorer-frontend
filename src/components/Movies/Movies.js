@@ -20,12 +20,12 @@ function Movies(props) {
   // ошибка, связанная со вводом поискового запроса
   const [searchError, setSearchError] = React.useState("");
   // фильтр короткометражек
-  const [isActiveBar, setIsActiveBar] = React.useState(
+  const [moviesToggle, setMoviesToggle] = React.useState(
     localStorage.getItem("ShortMoviesStatus") || false
   );
   // фильмы со стороннего апи
   const [movies, setMovies] = React.useState(
-    JSON.parse(localStorage.getItem("fullMoviesList")) || []
+    JSON.parse(localStorage.getItem("FullMoviesList")) || []
   );
   // фильмы, сохраненные пользователем
   const [savedMovies, setSavedMovies] = React.useState(
@@ -33,13 +33,15 @@ function Movies(props) {
   );
   // статус загрузки
   const [isLoading, setIsLoading] = React.useState(false);
+  // текстовое сообщение об отсутствии фильмов по результатам поиска
+  const [notFoundMovies, setIsNotFoundMovies] = React.useState("");
 
   // при отрисовке страницы сохраняем в LS фильмы со стороннего апи, в переменную сохраненные фильмы
   React.useEffect(() => {
-    Promise.all([moviesApi.getMovies(), mainApi.getMovies()])
+    mainApi
+      .getMovies()
       .then((data) => {
-        localStorage.setItem("fullMoviesList", JSON.stringify(data[0]));
-        localStorage.setItem("SavedMoviesList", JSON.stringify(data[1]));
+        localStorage.setItem("SavedMoviesList", JSON.stringify(data));
       })
       .catch((err) => console.log(`Err: ${err}`));
   }, []);
@@ -54,7 +56,7 @@ function Movies(props) {
       setSearchQuery(previousRequest);
     }
     if (previousBarStatus) {
-      setIsActiveBar(previousBarStatus);
+      setMoviesToggle(previousBarStatus);
     }
 
     if (previousResult) {
@@ -71,12 +73,12 @@ function Movies(props) {
 
   // переключатель фильтра короткометражек
   function handleClick() {
-    const newBarStatus = !isActiveBar;
-    setIsActiveBar(newBarStatus);
+    const newBarStatus = !moviesToggle;
+    setMoviesToggle(newBarStatus);
     if (searchQuery === "") {
       return;
     } else {
-      const fullMoviesList = JSON.parse(localStorage.getItem("fullMoviesList"));
+      const fullMoviesList = JSON.parse(localStorage.getItem("FullMoviesList"));
       const filteredResult = SearchRequest(
         fullMoviesList,
         searchQuery,
@@ -88,21 +90,73 @@ function Movies(props) {
     }
   }
 
+  function handleSearchRequest() {
+    const fullMoviesList = JSON.parse(localStorage.getItem("FullMoviesList"));
+
+    if (fullMoviesList) {
+      const searchResult = SearchRequest(
+        fullMoviesList,
+        searchQuery,
+        moviesToggle
+      );
+
+      if (searchResult.length < 1) {
+        setIsNotFoundMovies("Ничего не найдено");
+      }
+
+      setIsLoading(false);
+      setMovies(searchResult);
+
+      localStorage.setItem("SearchResult", JSON.stringify(searchResult));
+      localStorage.setItem("SearchRequest", searchQuery);
+      localStorage.setItem("ShortMoviesStatus", moviesToggle);
+
+      return;
+    }
+  }
+
   // активируем поиск по данным из поисковой строки+фильтра, сохраняем данные в LS
   function handleSubmit(e) {
     e.preventDefault();
+
+    if (searchQuery === "") {
+      return;
+    }
+
     setIsLoading(true);
-    const fullMoviesList = JSON.parse(localStorage.getItem("fullMoviesList"));
-    const searchResult = SearchRequest(
-      fullMoviesList,
-      searchQuery,
-      isActiveBar
-    );
-    setMovies(searchResult);
+    //handleSearchRequest(searchQuery);
+    const fullMoviesList = JSON.parse(localStorage.getItem("FullMoviesList"));
+
+    if (fullMoviesList) {
+      const searchResult = SearchRequest(
+        fullMoviesList,
+        searchQuery,
+        moviesToggle
+      );
+
+      if (searchResult.length < 1) {
+        setIsNotFoundMovies("Ничего не найдено");
+      }
+
+      setIsLoading(false);
+      setMovies(searchResult);
+
+      localStorage.setItem("SearchResult", JSON.stringify(searchResult));
+      localStorage.setItem("SearchRequest", searchQuery);
+      localStorage.setItem("ShortMoviesStatus", moviesToggle);
+
+      return;
+    }
+
+    moviesApi
+      .getMovies()
+      .then((data) => {
+        localStorage.setItem("FullMoviesList", JSON.stringify(data));
+        handleSearchRequest(searchQuery);
+      })
+      .catch((err) => console.log(`Err: ${err}`));
+
     setIsLoading(false);
-    localStorage.setItem("SearchResult", JSON.stringify(searchResult));
-    localStorage.setItem("SearchRequest", searchQuery);
-    localStorage.setItem("ShortMoviesStatus", isActiveBar);
   }
 
   function handleMovieAdd(movie) {
@@ -137,14 +191,15 @@ function Movies(props) {
         handleSubmit={handleSubmit}
         handleChange={handleChange}
         onClick={handleClick}
-        isActiveBar={isActiveBar}
+        isActiveBar={moviesToggle}
         value={searchQuery}
         error={searchError}
       />
-      {isLoading ? (
+      {isLoading === true ? (
         <Preloader />
       ) : (
         <MoviesCardList
+          searchResultMessage={notFoundMovies}
           movies={movies}
           onMovieAdd={handleMovieAdd}
           onMovieDelete={handleMovieDelete}

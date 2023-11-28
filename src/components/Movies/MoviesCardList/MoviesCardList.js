@@ -26,7 +26,7 @@ function MoviesCardList(props) {
   return (
     <section className="moviescardlist">
       {props.movies.length === 0 ? (
-        <p className="moviescardlist__no-result"> Ничего не найдено </p>
+        <p className="moviescardlist__no-result">{props.searchResultMessage}</p>
       ) : (
         <div className="moviescardlist__container">
           {props.movies.slice(0, moviesCounter).map((movie) => (
