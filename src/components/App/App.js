@@ -36,6 +36,10 @@ function App() {
       });
   }
 
+  React.useEffect(() => {
+    setIsSubmitError("");
+  }, [navigate])
+
   //авторизация, в случае успеха переходим на страницу фильмов
   function handleLogin(email, password) {
     auth
