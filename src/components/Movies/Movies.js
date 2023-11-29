@@ -50,6 +50,10 @@ function Movies(props) {
     const previousBarStatus = localStorage.getItem("ShortMoviesStatus");
     const previousResult = JSON.parse(localStorage.getItem("SearchResult"));
 
+    if (!previousRequest) {
+      return;
+    }
+
     if (previousRequest) {
       setSearchQuery(previousRequest);
     }
