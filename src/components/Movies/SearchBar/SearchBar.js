@@ -2,30 +2,42 @@ import React from "react";
 
 import "./SearchBar.css";
 import searchicon from "../../../images/icon_search.svg";
+import SlideBar from "./SlideBar/SlideBar";
 
-function SearchBar() {
+function SearchBar(props) {
   return (
     <section className="searchbar">
-      <form className="searchbar__container">
+      <form
+        className="searchbar__container"
+        name="search-bar"
+        onSubmit={props.handleSubmit}
+        noValidate
+      >
         <img className="searchbar__icon" alt="лупа" src={searchicon} />
-        <input
-          className="searchbar__input"
-          placeholder="Фильм"
-          type="search"
-          required=""
-        ></input>
-        <button className="searchbar__button" type="button">
+        <div className="searchbar__input-container">
+          <input
+            className="searchbar__input"
+            name="search"
+            id="search"
+            placeholder={props.placeholder}
+            type="text"
+            required
+            minLength="1"
+            onChange={props.handleChange}
+            value={props.value}
+          ></input>
+          <span className="searchbar__input-error">{props.error}</span>
+        </div>
+        <button className="searchbar__button" type="submit">
           Найти
         </button>
         <div className="searchbar__slidebar searchbar__slidebar_location_inside">
-          <button className="searchbar__slidebar-icon searchbar__slidebar-icon_switched_on" type="button" />
-          <span className="searchbar__slidebar-text">Короткометражки</span>
+          <SlideBar onClick={props.onClick} isActiveBar={props.isActiveBar} />
         </div>
       </form>
       <div className="searchbar__slidebar searchbar__slidebar_location_outside">
-          <button className="searchbar__slidebar-icon searchbar__slidebar-icon_switched_on" type="button" />
-          <span className="searchbar__slidebar-text">Короткометражки</span>
-        </div>
+        <SlideBar onClick={props.onClick} isActiveBar={props.isActiveBar} />
+      </div>
     </section>
   );
 }

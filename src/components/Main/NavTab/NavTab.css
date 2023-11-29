@@ -44,8 +44,8 @@
 }
 
 @media screen and (max-width: 767px) {
-    .navTab__link {
-        padding-top: 0px;
-        font-size: 11px;
-    }
+  .navTab__link {
+    padding-top: 0px;
+    font-size: 11px;
+  }
 }

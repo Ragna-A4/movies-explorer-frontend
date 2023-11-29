@@ -1,25 +1,64 @@
 import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
+import Preloader from "../Preloader/Preloader";
+import { useWidth, useMoviesCounter } from "../../../utils/MoviesCounter";
 
 import "./MoviesCardList.css";
-import { initialData } from "../../../utils/data";
 
-function MoviesCardList() {
+function MoviesCardList(props) {
+  const width = useWidth();
+  const { moviesCounter, addMovies, updateMoviesCounter } =
+    useMoviesCounter(width);
+
+  function isSaved(movie) {
+    const checkIsSaved = JSON.parse(localStorage.getItem("SavedMoviesList"));
+    if (!checkIsSaved) {
+      return;
+    }
+    return checkIsSaved.some((item) => {
+      if (item.movieId === movie.id) {
+        movie._id = item._id;
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+
+  React.useEffect(() => {
+    updateMoviesCounter();
+    // eslint-disable-next-line
+  }, [props.movies]);
+
   return (
     <section className="moviescardlist">
-      <div className="moviescardlist__container">
-        {initialData.map((card) => (
-          <MoviesCard
-            key={card.movieId}
-            image={card.image}
-            name={card.name}
-            duration={card.duration}
-            owner={card.owner}
-          />
-        ))}
-      </div>
-      <button className="moviescardlist__button" type="button">
-        Ещё
+      {props.isLoading !== false ? (
+        <Preloader />
+      ) : props.movies.length === 0 ? (
+        <p className="moviescardlist__no-result">{props.searchResultMessage}</p>
+      ) : (
+        <div className="moviescardlist__container">
+          {props.movies.slice(0, moviesCounter).map((movie) => (
+            <MoviesCard
+              key={movie.id}
+              movie={movie}
+              onMovieAdd={props.onMovieAdd}
+              onMovieDelete={props.onMovieDelete}
+              isSaved={isSaved(movie)}
+            />
+          ))}
+        </div>
+      )}
+      <button
+        className={
+          moviesCounter < props.movies.length
+            ? "moviescardlist__button"
+            : "moviescardlist__button-container"
+        }
+        type="button"
+        onClick={addMovies}
+      >
+        {moviesCounter < props.movies.length ? "Ещё" : ""}
       </button>
     </section>
   );

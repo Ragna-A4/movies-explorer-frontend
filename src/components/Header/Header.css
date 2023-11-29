@@ -92,7 +92,7 @@
   font-weight: 400;
 }
 
-.header__menu-item_type_authorized:first-child {
+.header__menu-item_isactive {
   font-weight: 500;
 }
 
