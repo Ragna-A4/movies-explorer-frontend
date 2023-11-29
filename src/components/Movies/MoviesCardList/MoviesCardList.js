@@ -1,12 +1,14 @@
 import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
+import Preloader from "../Preloader/Preloader";
 import { useWidth, useMoviesCounter } from "../../../utils/MoviesCounter";
 
 import "./MoviesCardList.css";
 
 function MoviesCardList(props) {
   const width = useWidth();
-  const { moviesCounter, addMovies } = useMoviesCounter(width);
+  const { moviesCounter, addMovies, updateMoviesCounter } =
+    useMoviesCounter(width);
 
   function isSaved(movie) {
     const checkIsSaved = JSON.parse(localStorage.getItem("SavedMoviesList"));
@@ -23,9 +25,16 @@ function MoviesCardList(props) {
     });
   }
 
+  React.useEffect(() => {
+    updateMoviesCounter();
+    // eslint-disable-next-line
+  }, [props.movies]);
+
   return (
     <section className="moviescardlist">
-      {props.movies.length === 0 ? (
+      {props.isLoading ? (
+        <Preloader />
+      ) : props.movies.length === 0 ? (
         <p className="moviescardlist__no-result">{props.searchResultMessage}</p>
       ) : (
         <div className="moviescardlist__container">

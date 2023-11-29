@@ -3,7 +3,6 @@ import React from "react";
 import "./Movies.css";
 import Header from "../Header/Header";
 import SearchBar from "./SearchBar/SearchBar";
-import Preloader from "./Preloader/Preloader";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import { moviesApi } from "../../utils/MoviesApi";
@@ -200,16 +199,13 @@ function Movies(props) {
         value={searchQuery}
         error={searchError}
       />
-      {isLoading === true ? (
-        <Preloader />
-      ) : (
-        <MoviesCardList
-          searchResultMessage={notFoundMovies}
-          movies={movies}
-          onMovieAdd={handleMovieAdd}
-          onMovieDelete={handleMovieDelete}
-        />
-      )}
+      <MoviesCardList
+        searchResultMessage={notFoundMovies}
+        movies={movies}
+        onMovieAdd={handleMovieAdd}
+        onMovieDelete={handleMovieDelete}
+        isLoading={isLoading}
+      />
       <Footer />
     </main>
   );
