@@ -4,7 +4,7 @@ import "./SlideBar.css";
 
 function SlideBar(props) {
   const buttonClassName = `slidebar-icon ${
-    props.isActiveBar === true
+    props.isActiveBar
       ? "slidebar-icon_switched_on"
       : "slidebar-icon_switched_off"
   }`;
