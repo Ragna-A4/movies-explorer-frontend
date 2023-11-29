@@ -7,7 +7,12 @@ import SlideBar from "./SlideBar/SlideBar";
 function SearchBar(props) {
   return (
     <section className="searchbar">
-      <form className="searchbar__container" onSubmit={props.handleSubmit}>
+      <form
+        className="searchbar__container"
+        name="search-bar"
+        onSubmit={props.handleSubmit}
+        noValidate
+      >
         <img className="searchbar__icon" alt="лупа" src={searchicon} />
         <div className="searchbar__input-container">
           <input

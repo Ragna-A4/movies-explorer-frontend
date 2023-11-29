@@ -19,9 +19,7 @@ function Movies(props) {
   // ошибка, связанная со вводом поискового запроса
   const [searchError, setSearchError] = React.useState("");
   // фильтр короткометражек
-  const [moviesToggle, setMoviesToggle] = React.useState(
-    localStorage.getItem("ShortMoviesStatus") || false
-  );
+  const [moviesToggle, setMoviesToggle] = React.useState(false);
   // фильмы со стороннего апи
   const [movies, setMovies] = React.useState(
     JSON.parse(localStorage.getItem("FullMoviesList")) || []
@@ -54,8 +52,11 @@ function Movies(props) {
     if (previousRequest) {
       setSearchQuery(previousRequest);
     }
-    if (previousBarStatus) {
-      setMoviesToggle(previousBarStatus);
+
+    if (previousBarStatus === true) {
+      setMoviesToggle(true);
+    } else if (previousBarStatus === false) {
+      setMoviesToggle(false);
     }
 
     if (previousResult) {
@@ -73,7 +74,7 @@ function Movies(props) {
   // переключатель фильтра короткометражек
   function handleClick() {
     const newBarStatus = !moviesToggle;
-    setMoviesToggle(newBarStatus);
+
     if (searchQuery === "") {
       return;
     } else {
@@ -84,6 +85,7 @@ function Movies(props) {
         newBarStatus
       );
       setMovies(filteredResult);
+      setMoviesToggle(newBarStatus);
       localStorage.setItem("SearchResult", JSON.stringify(filteredResult));
       localStorage.setItem("ShortMoviesStatus", newBarStatus);
     }
@@ -103,7 +105,6 @@ function Movies(props) {
         setIsNotFoundMovies("Ничего не найдено");
       }
 
-      setIsLoading(false);
       setMovies(searchResult);
 
       localStorage.setItem("SearchResult", JSON.stringify(searchResult));
@@ -119,10 +120,10 @@ function Movies(props) {
     e.preventDefault();
 
     if (searchQuery === "") {
+      setSearchError("Нужно ввести ключевое слово");
       return;
     }
 
-    setIsLoading(true);
     //handleSearchRequest(searchQuery);
     const fullMoviesList = JSON.parse(localStorage.getItem("FullMoviesList"));
 
@@ -137,7 +138,6 @@ function Movies(props) {
         setIsNotFoundMovies("Ничего не найдено");
       }
 
-      setIsLoading(false);
       setMovies(searchResult);
 
       localStorage.setItem("SearchResult", JSON.stringify(searchResult));
@@ -146,16 +146,16 @@ function Movies(props) {
 
       return;
     }
-
+    setIsLoading(true);
     moviesApi
       .getMovies()
       .then((data) => {
         localStorage.setItem("FullMoviesList", JSON.stringify(data));
         handleSearchRequest(searchQuery);
+        setIsLoading(false);
       })
       .catch((err) => console.log(`Err: ${err}`));
-
-    setIsLoading(false);
+    
   }
 
   function handleMovieAdd(movie) {

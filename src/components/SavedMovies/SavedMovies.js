@@ -3,7 +3,6 @@ import React from "react";
 import "../Movies/Movies.css";
 import Header from "../Header/Header";
 import SearchBar from "../Movies/SearchBar/SearchBar";
-import Preloader from "../Movies/Preloader/Preloader";
 import SavedMoviesCardList from "./SavedMoviesCardList";
 import Footer from "../Footer/Footer";
 import { mainApi } from "../../utils/MainApi";
@@ -20,8 +19,6 @@ function SavedMovies(props) {
   const [savedMovies, setSavedMovies] = React.useState(
     JSON.parse(localStorage.getItem("SavedMoviesList")) || []
   );
-  // статус загрузки
-  const [isLoading, setIsLoading] = React.useState(false);
   // текстовое сообщение об отсутствии фильмов по результатам поиска
   const [notFoundMovies, setIsNotFoundMovies] = React.useState("");
 
@@ -58,7 +55,12 @@ function SavedMovies(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    setIsLoading(true);
+
+    if (searchQuery === "") {
+      setSearchError("Нужно ввести ключевое слово");
+      return;
+    }
+
     const fullSavedMoviesList = JSON.parse(
       localStorage.getItem("SavedMoviesList")
     );
@@ -71,7 +73,6 @@ function SavedMovies(props) {
       setIsNotFoundMovies("Ничего не найдено");
     }
     setSavedMovies(searchResult);
-    setIsLoading(false);
   }
 
   function handleMovieDelete(movie) {
@@ -87,7 +88,7 @@ function SavedMovies(props) {
         const newSavedMovies = fullSavedMoviesList.filter(
           (c) => c._id !== movie._id
         );
-        
+
         setSavedMovies(filtredSavrdMovieList);
         localStorage.setItem("SavedMoviesList", JSON.stringify(newSavedMovies));
       })
@@ -106,15 +107,11 @@ function SavedMovies(props) {
         value={searchQuery}
         error={searchError}
       />
-      {isLoading ? (
-        <Preloader />
-      ) : (
-        <SavedMoviesCardList
-          searchResultMessage={notFoundMovies}
-          movies={savedMovies}
-          onMovieDelete={handleMovieDelete}
-        />
-      )}
+      <SavedMoviesCardList
+        searchResultMessage={notFoundMovies}
+        movies={savedMovies}
+        onMovieDelete={handleMovieDelete}
+      />
       <Footer />
     </main>
   );

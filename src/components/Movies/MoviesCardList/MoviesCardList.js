@@ -32,7 +32,7 @@ function MoviesCardList(props) {
 
   return (
     <section className="moviescardlist">
-      {props.isLoading ? (
+      {props.isLoading !== false ? (
         <Preloader />
       ) : props.movies.length === 0 ? (
         <p className="moviescardlist__no-result">{props.searchResultMessage}</p>
