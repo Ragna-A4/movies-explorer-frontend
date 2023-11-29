@@ -19,7 +19,9 @@ function Movies(props) {
   // ошибка, связанная со вводом поискового запроса
   const [searchError, setSearchError] = React.useState("");
   // фильтр короткометражек
-  const [moviesToggle, setMoviesToggle] = React.useState(false);
+  const [moviesToggle, setMoviesToggle] = React.useState(
+    localStorage.getItem("ShortMoviesStatus") || false
+  );
   // фильмы со стороннего апи
   const [movies, setMovies] = React.useState(
     JSON.parse(localStorage.getItem("FullMoviesList")) || []
@@ -32,7 +34,6 @@ function Movies(props) {
   const [isLoading, setIsLoading] = React.useState(false);
   // текстовое сообщение об отсутствии фильмов по результатам поиска
   const [notFoundMovies, setIsNotFoundMovies] = React.useState("");
-
   // при отрисовке страницы сохраняем в LS фильмы со стороннего апи, в переменную сохраненные фильмы
   React.useEffect(() => {
     mainApi
@@ -53,13 +54,17 @@ function Movies(props) {
       setSearchQuery(previousRequest);
     }
 
-    if (previousBarStatus === true) {
+    if (previousBarStatus === "true") {
       setMoviesToggle(true);
-    } else if (previousBarStatus === false) {
+    } else if (previousBarStatus === "false") {
       setMoviesToggle(false);
     }
 
-    if (previousResult) {
+    if (previousResult.length < 1 && previousRequest) {
+      setMovies([]);
+      setIsNotFoundMovies("Ничего не найдено");
+      return;
+    } else if (previousResult) {
       setMovies(previousResult);
     }
   }, []);
@@ -84,6 +89,11 @@ function Movies(props) {
         searchQuery,
         newBarStatus
       );
+
+      if (filteredResult.length < 1) {
+        setIsNotFoundMovies("Ничего не найдено");
+      }
+
       setMovies(filteredResult);
       setMoviesToggle(newBarStatus);
       localStorage.setItem("SearchResult", JSON.stringify(filteredResult));
@@ -155,7 +165,6 @@ function Movies(props) {
         setIsLoading(false);
       })
       .catch((err) => console.log(`Err: ${err}`));
-    
   }
 
   function handleMovieAdd(movie) {

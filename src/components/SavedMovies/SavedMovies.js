@@ -50,6 +50,9 @@ function SavedMovies(props) {
       searchQuery,
       !savedMoviesToggle
     );
+    if (filteredResult.length < 1) {
+      setIsNotFoundMovies("Ничего не найдено");
+    }
     setSavedMovies(filteredResult);
   }
 
