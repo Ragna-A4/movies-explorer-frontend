@@ -5,7 +5,8 @@ import { useLocation } from "react-router-dom";
 import "./Navigation.css";
 
 function Navigation({ isOpen, onClose }) {
-  let location = useLocation;
+  let location = useLocation();
+
   return (
     <div className={`navigation ${isOpen ? "navigation_opened" : ""}`}>
       <button
@@ -15,26 +16,36 @@ function Navigation({ isOpen, onClose }) {
       />
       <nav className="navigation__container">
         <Link
-          to={`${location.pathName === "/" ? "" : "/"}`}
-          className="navigation__menu-item"
+          to={`${location.pathname === "/" ? "" : "/"}`}
+          className={`navigation__menu-item ${
+            location.pathname === "/" ? "navigation__menu-item_isactive" : ""
+          }`}
         >
           Главная
         </Link>
         <Link
-          to={`${location.pathName === "/movies" ? "" : "/movies"}`}
-          className="navigation__menu-item navigation__menu-item_isactive"
+          to={`${location.pathname === "/movies" ? "" : "/movies"}`}
+          className={`navigation__menu-item ${
+            location.pathname === "/movies"
+              ? "navigation__menu-item_isactive"
+              : ""
+          }`}
         >
           Фильмы
         </Link>
         <Link
-          to={`${location.pathName === "/saved-movies" ? "" : "/saved-movies"}`}
-          className="navigation__menu-item"
+          to={`${location.pathname === "/saved-movies" ? "" : "/saved-movies"}`}
+          className={`navigation__menu-item ${
+            location.pathname === "/saved-movies"
+              ? "navigation__menu-item_isactive"
+              : ""
+          }`}
         >
           Сохранённые фильмы
         </Link>
       </nav>
       <Link
-        to={`${location.pathName === "/profile" ? "" : "/profile"}`}
+        to={`${location.pathname === "/profile" ? "" : "/profile"}`}
         className="navigation__auth-container"
       >
         <p className="navigation__auth-text">Аккаунт</p>

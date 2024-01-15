@@ -2,21 +2,55 @@ import React from "react";
 
 import "./MoviesCard.css";
 
-function MoviesCard({ image, name, duration, owner }) {
-  const isOwn = owner === "me";
-  const cardButtonClassName = `moviescard__button ${
-    isOwn
-      ? "moviescard__button_type_downloaded"
-      : "moviescard__button_type_tosave"
-  }`;
+function MoviesCard({ movie, onMovieAdd, onMovieDelete, isSaved }) {
+  function formatDuration(time) {
+    if (time < 60) {
+      return `${time}м`;
+    } else {
+      return `${Math.floor(time / 60)}ч ${time % 60}м`;
+    }
+  }
+
+  function handleAddClick() {
+    onMovieAdd(movie);
+  }
+
+  function handleDeleteClick() {
+    onMovieDelete(movie);
+  }
 
   return (
     <div className="moviescard">
-      <img className="moviescard__image" alt={name} src={image} />
-      <button className={cardButtonClassName} type="button" />
+      <a
+        className="moviescard__trailerlink-redirect"
+        target="_blank"
+        rel="noreferrer"
+        href={movie.trailerLink}
+      >
+        <img
+          className="moviescard__image"
+          alt={movie.nameRU}
+          src={`https://api.nomoreparties.co/${movie.image.url}`}
+        />
+      </a>
+      {isSaved === true && (
+        <button
+          className="moviescard__button moviescard__button_type_downloaded"
+          type="button"
+          onClick={handleDeleteClick}
+        ></button>
+      )}
+      {isSaved === false && (
+        <button
+          className="moviescard__button moviescard__button_type_tosave"
+          type="button"
+          onClick={handleAddClick}
+        ></button>
+      )}
+
       <div className="moviescard__container">
-        <h2 className="moviescard__title">{name}</h2>
-        <p className="moviescard__duration">{duration}</p>
+        <h2 className="moviescard__title">{movie.nameRU}</h2>
+        <p className="moviescard__duration">{formatDuration(movie.duration)}</p>
       </div>
     </div>
   );

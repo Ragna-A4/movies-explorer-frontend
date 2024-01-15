@@ -2,32 +2,24 @@ import React from "react";
 import SavedMoviesCard from "./SavedMoviesCard";
 
 import "../Movies/MoviesCardList/MoviesCardList.css";
-import { initialData } from "../../utils/data";
 
-function SavedMoviesCardList() {
+function SavedMoviesCardList(props) {
   return (
     <section className="moviescardlist">
-      <div className="moviescardlist__container">
-        {initialData.map((card) => {
-          if (card.owner === "me") {
-            return (
-              <SavedMoviesCard
-                key={card.movieId}
-                image={card.image}
-                name={card.name}
-                duration={card.duration}
-                owner={card.owner}
-              />
-            );
-          }
-        })}
-      </div>
-      <button
-        className="moviescardlist__button"
-        type="button"
-        style={{ background: "transparent" }}
-      >
-      </button>
+      {props.movies.length === 0 ? (
+        <p className="moviescardlist__no-result">{props.searchResultMessage}</p>
+      ) : (
+        <div className="moviescardlist__container">
+          {props.movies.map((movie) => (
+            <SavedMoviesCard
+              key={movie._id}
+              movie={movie}
+              onMovieDelete={props.onMovieDelete}
+            />
+          ))}
+        </div>
+      )}
+      <div className="moviescardlist__button-container" />
     </section>
   );
 }
